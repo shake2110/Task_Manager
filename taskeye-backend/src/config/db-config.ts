@@ -1,3 +1,5 @@
+import { isProduction } from "../shared/utils";
+
 const config: any = {
   max: +(process.env.DB_MAX_CLIENTS || "10"),
   idleTimeoutMillis: 30000,
