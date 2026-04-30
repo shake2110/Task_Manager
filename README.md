@@ -1,26 +1,26 @@
 <div align="center">
 <h1 align="center">
-    <a href="https://worklenz.com" target="_blank" rel="noopener noreferrer">
-        <img src="https://s3.dualstack.us-west-2.amazonaws.com/worklenz.com/assets/worklenz-light-mode.png" alt="Worklenz Logo" width="400">
+    <a href="https://taskeye.xyz" target="_blank" rel="noopener noreferrer">
+        <img src="https://s3.dualstack.us-west-2.amazonaws.com/taskeye.xyz/assets/TaskEye-light-mode.png" alt="TaskEye Logo" width="400">
     </a>  
 </h1>
 <h3 align="center">All-in-one open-source project management for efficient teams</h3>
 
 <p align="center">
-    <a href="https://github.com/Worklenz/worklenz/blob/main/LICENSE">
+    <a href="https://github.com/TaskEye/TaskEye/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/license-AGPL--3.0-blue.svg" alt="License">
     </a>
-    <a href="https://github.com/Worklenz/worklenz/releases">
-        <img src="https://img.shields.io/github/v/release/Worklenz/worklenz" alt="Release">
+    <a href="https://github.com/TaskEye/TaskEye/releases">
+        <img src="https://img.shields.io/github/v/release/TaskEye/TaskEye" alt="Release">
     </a>
-    <a href="https://github.com/Worklenz/worklenz/stargazers">
-        <img src="https://img.shields.io/github/stars/Worklenz/worklenz" alt="Stars">
+    <a href="https://github.com/TaskEye/TaskEye/stargazers">
+        <img src="https://img.shields.io/github/stars/TaskEye/TaskEye" alt="Stars">
     </a>
-    <a href="https://github.com/Worklenz/worklenz/network/members">
-        <img src="https://img.shields.io/github/forks/Worklenz/worklenz" alt="Forks">
+    <a href="https://github.com/TaskEye/TaskEye/network/members">
+        <img src="https://img.shields.io/github/forks/TaskEye/TaskEye" alt="Forks">
     </a>
-    <a href="https://github.com/Worklenz/worklenz/issues">
-        <img src="https://img.shields.io/github/issues/Worklenz/worklenz" alt="Issues">
+    <a href="https://github.com/TaskEye/TaskEye/issues">
+        <img src="https://img.shields.io/github/issues/TaskEye/TaskEye" alt="Issues">
     </a>
     <a href="https://discord.com/invite/6Qmm839mgr">
         <img src="https://img.shields.io/discord/1202616582757556276?style=flat&logo=discord&logoColor=white&label=Discord&color=5865F2" alt="Discord">
@@ -28,27 +28,27 @@
 </p>
 
 <p align="center">
-    <a href="https://worklenz.com"><b>Website</b></a> •
-    <a href="https://app.worklenz.com/auth/signup"><b>Sign in</b></a> •
-    <a href="https://docs.worklenz.com/en/start/introduction/"><b>Documentation</b></a>
+    <a href="https://taskeye.xyz"><b>Website</b></a> •
+    <a href="https://app.taskeye.xyz/auth/signup"><b>Sign in</b></a> •
+    <a href="https://docs.taskeye.xyz/en/start/introduction/"><b>Documentation</b></a>
 </p>
 
 </div>
 
 ---
-Meet [Worklenz](https://worklenz.com), a powerful, open-source project management platform built to help teams plan smarter, collaborate better, and ship faster. No bloated tools. No unnecessary complexity. Just everything your team needs, in one place. 🚀
-> Worklenz is growing every day. Your bug reports, feature ideas, and feedback shape what we build next. Jump into [Discord](https://discord.com/invite/6Qmm839mgr) or open a GitHub issue - we read everything!
+Meet [TaskEye](https://taskeye.xyz), a powerful, open-source project management platform built to help teams plan smarter, collaborate better, and ship faster. No bloated tools. No unnecessary complexity. Just everything your team needs, in one place. 🚀
+> TaskEye is growing every day. Your bug reports, feature ideas, and feedback shape what we build next. Jump into [Discord](https://discord.com/invite/6Qmm839mgr) or open a GitHub issue - we read everything!
 
 
 ## 🚀 Getting Started
 
 Pick the setup that works best for you:
 <br>
-### ☁️ Worklenz Cloud
-The fastest way to get started - no setup, no infrastructure. Just sign up at [worklenz.com](https://worklenz.com) and start managing projects in minutes.
+### ☁️ TaskEye Cloud
+The fastest way to get started - no setup, no infrastructure. Just sign up at [taskeye.xyz](https://taskeye.xyz) and start managing projects in minutes.
 
-### 🖥️ Self-Host Worklenz
-Prefer full control over your data? Run Worklenz on your own server.
+### 🖥️ Self-Host TaskEye
+Prefer full control over your data? Run TaskEye on your own server.
 
 | Method | Guide |
 |--------|-------|
@@ -75,34 +75,34 @@ Prefer full control over your data? Run Worklenz on your own server.
 
 <div align="center">
 
-[![Task Management Task List View](https://tinyurl.com/2cd35sk2)](https://worklenz.com/task-management/)
+[![Task Management Task List View](https://tinyurl.com/2cd35sk2)](https://taskeye.xyz/task-management/)
 _**Task Management Task List View**_
 
-[![Task Management Kanban View](https://tinyurl.com/253o4fp7)](https://worklenz.com/task-management/)
+[![Task Management Kanban View](https://tinyurl.com/253o4fp7)](https://taskeye.xyz/task-management/)
 _**Task Management Kanban View**_
 
-[![Resource Management](https://tinyurl.com/228kgt26)](https://worklenz.com/resource-management/)
+[![Resource Management](https://tinyurl.com/228kgt26)](https://taskeye.xyz/resource-management/)
 _**Resource Management**_
 
-[![Projects & Tasks Templates](https://tinyurl.com/2are8yqt)](https://worklenz.com/project-templates/)
+[![Projects & Tasks Templates](https://tinyurl.com/2are8yqt)](https://taskeye.xyz/project-templates/)
 _**Projects & Tasks Templates**_
 
-[![Time Tracking](https://tinyurl.com/28t2gryx)](https://worklenz.com/time-tracking/)
+[![Time Tracking](https://tinyurl.com/28t2gryx)](https://taskeye.xyz/time-tracking/)
 _**Time Tracking**_
 
-[![Project Insights](https://tinyurl.com/23lxzxx9)](https://worklenz.com/analytics/)
+[![Project Insights](https://tinyurl.com/23lxzxx9)](https://taskeye.xyz/analytics/)
 _**Project Insights**_
 
-[![Team Utilization](https://tinyurl.com/2xox9a9v)](https://worklenz.com/team-utilization/)
+[![Team Utilization](https://tinyurl.com/2xox9a9v)](https://taskeye.xyz/team-utilization/)
 _**Team Utilization**_
 
-[![Scheduler](https://tinyurl.com/239vjndh)](https://worklenz.com/timesheets/)
+[![Scheduler](https://tinyurl.com/239vjndh)](https://taskeye.xyz/timesheets/)
 _**Scheduler**_
 
-[![Project Profitability Monitor](https://tinyurl.com/2y4husx3)](https://worklenz.com/project-finance/)
+[![Project Profitability Monitor](https://tinyurl.com/2y4husx3)](https://taskeye.xyz/project-finance/)
 _**Project Profitability Monitor**_
 
-[![Client Portal](https://tinyurl.com/2yepbyt2)](https://worklenz.com/client-portal/)
+[![Client Portal](https://tinyurl.com/2yepbyt2)](https://taskeye.xyz/client-portal/)
 _**Client Portal**_
 </div>
 <br>
@@ -133,13 +133,13 @@ _**Client Portal**_
 
 ## 📝 Documentation
 
-Explore Worklenz's [product documentation](https://docs.worklenz.com/en/start/introduction/) to learn about features, setup, and usage and more.
+Explore TaskEye's [product documentation](https://docs.taskeye.xyz/en/start/introduction/) to learn about features, setup, and usage and more.
 <br>
 
 <a id="quick-start-docker"></a>
 ### 🐳 Quick Start (Docker — Recommended)
 
-The fastest way to get Worklenz running locally with all dependencies included. This setup includes **production-ready features** like nginx reverse proxy, SSL/TLS support, Redis caching, and automated backups.
+The fastest way to get TaskEye running locally with all dependencies included. This setup includes **production-ready features** like nginx reverse proxy, SSL/TLS support, Redis caching, and automated backups.
 
 **📋 Prerequisites:**
 - Docker and Docker Compose installed on your system
@@ -150,8 +150,8 @@ The fastest way to get Worklenz running locally with all dependencies included. 
 #### Option 1: Automated Setup (Easiest)
 ```bash
 # 📥 Clone the repository
-git clone https://github.com/Worklenz/worklenz.git
-cd worklenz
+git clone https://github.com/TaskEye/TaskEye.git
+cd TaskEye
 
 # Run the automated setup script
 ./quick-setup.sh
@@ -166,8 +166,8 @@ This script will:
 #### Option 2: Manual Setup
 ```bash
 # 📥 Clone the repository
-git clone https://github.com/Worklenz/worklenz.git
-cd worklenz
+git clone https://github.com/TaskEye/TaskEye.git
+cd TaskEye
 
 # 📄 Copy and configure environment file
 cp .env.example .env
@@ -209,51 +209,51 @@ For developers who want to run the services individually or customize the setup.
 
 1. 📥 Clone the repository:
 ```bash
-git clone https://github.com/Worklenz/worklenz.git
-cd worklenz
+git clone https://github.com/TaskEye/TaskEye.git
+cd TaskEye
 ```
 
 2. ⚙️ Set up environment variables:
 ```bash
-cp worklenz-backend/.env.template worklenz-backend/.env
+cp taskeye-backend/.env.template taskeye-backend/.env
 # Update the environment variables with your configuration
 ```
 
 3. 📦 Install dependencies:
 ```bash
 # Backend dependencies
-cd worklenz-backend
+cd taskeye-backend
 npm install
 
 # 🖥️ Frontend dependencies
-cd ../worklenz-frontend
+cd ../taskeye-frontend
 npm install
 ```
 
 4. 🗄️ Set up the database:
 ```bash
-# Create a PostgreSQL database named worklenz_db
-cd worklenz-backend
+# Create a PostgreSQL database named taskeye_db
+cd taskeye-backend
 
 # Execute the SQL setup files in the correct order
-psql -U your_username -d worklenz_db -f database/sql/0_extensions.sql
-psql -U your_username -d worklenz_db -f database/sql/1_tables.sql
-psql -U your_username -d worklenz_db -f database/sql/indexes.sql
-psql -U your_username -d worklenz_db -f database/sql/4_functions.sql
-psql -U your_username -d worklenz_db -f database/sql/triggers.sql
-psql -U your_username -d worklenz_db -f database/sql/3_views.sql
-psql -U your_username -d worklenz_db -f database/sql/2_dml.sql
-psql -U your_username -d worklenz_db -f database/sql/5_database_user.sql
+psql -U your_username -d taskeye_db -f database/sql/0_extensions.sql
+psql -U your_username -d taskeye_db -f database/sql/1_tables.sql
+psql -U your_username -d taskeye_db -f database/sql/indexes.sql
+psql -U your_username -d taskeye_db -f database/sql/4_functions.sql
+psql -U your_username -d taskeye_db -f database/sql/triggers.sql
+psql -U your_username -d taskeye_db -f database/sql/3_views.sql
+psql -U your_username -d taskeye_db -f database/sql/2_dml.sql
+psql -U your_username -d taskeye_db -f database/sql/5_database_user.sql
 ```
 
 5. ▶️ Start the development servers:
 ```bash
 # Backend (single command for build, watch, and auto-restart)
-cd worklenz-backend
+cd taskeye-backend
 npm run dev:all
 
 # Frontend (in another terminal)
-cd worklenz-frontend
+cd taskeye-frontend
 npm run dev
 ```
 
@@ -273,12 +273,12 @@ The new Docker setup includes production-ready features for secure and scalable 
 
 ```bash
 # Clone and navigate to the repository
-git clone https://github.com/Worklenz/worklenz.git
-cd worklenz
+git clone https://github.com/TaskEye/TaskEye.git
+cd TaskEye
 
 # Run the automated setup
 ./quick-setup.sh
-# When prompted, enter your production domain (e.g., worklenz.example.com)
+# When prompted, enter your production domain (e.g., TaskEye.example.com)
 # The script will configure SSL with Let's Encrypt automatically
 ```
 
@@ -331,13 +331,13 @@ cd worklenz
 
 **For complete deployment documentation**, see [DOCKER_SETUP.md](DOCKER_SETUP.md)
 
-**Video Guide**: For a complete walkthrough of deploying Worklenz to a remote server, check out our [deployment video guide](https://www.youtube.com/watch?v=CAZGu2iOXQs&t=10s).
+**Video Guide**: For a complete walkthrough of deploying TaskEye to a remote server, check out our [deployment video guide](https://www.youtube.com/watch?v=CAZGu2iOXQs&t=10s).
 
 ## ⚙️ Configuration
 
 ### Environment Variables
 
-Worklenz uses a comprehensive environment configuration system. Copy `.env.example` to `.env` and configure according to your needs.
+TaskEye uses a comprehensive environment configuration system. Copy `.env.example` to `.env` and configure according to your needs.
 
 **📂 Key Configuration Areas:**
 
@@ -383,7 +383,7 @@ MinIO provides an S3-compatible API, so any code that works with S3 will work wi
   - Username: minioadmin
   - Password: minioadmin
 
-- **🪣 Default Bucket**: worklenz-bucket (created automatically when the containers start)
+- **🪣 Default Bucket**: taskeye-bucket (created automatically when the containers start)
 
 ### 🛠️ Backend Storage Configuration
 
@@ -392,15 +392,15 @@ The backend is pre-configured to use MinIO with the following settings:
 ```javascript
 // S3 credentials with MinIO defaults
 export const REGION = process.env.AWS_REGION || "us-east-1";
-export const BUCKET = process.env.AWS_BUCKET || "worklenz-bucket";
-export const S3_URL = process.env.S3_URL || "http://minio:9000/worklenz-bucket";
+export const BUCKET = process.env.AWS_BUCKET || "taskeye-bucket";
+export const S3_URL = process.env.S3_URL || "http://minio:9000/taskeye-bucket";
 export const S3_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID || "minioadmin";
 export const S3_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY || "minioadmin";
 ```
 
 ## 🔒 Security
 
-Worklenz is built with security in mind:
+TaskEye is built with security in mind:
 
 - 🔐 Non-root Docker containers
 - 🌐 Network isolation (backend is internal-only)
@@ -409,12 +409,12 @@ Worklenz is built with security in mind:
 - 🔒 Security headers (HSTS, CSP, X-Frame-Options, etc.)
 - 🗝️ Auto-generated secure secrets via `openssl rand -hex 32`
 
-Found a security vulnerability? Please **do not** open a public issue. Email us at [info@worklenz.com](mailto:info@worklenz.com) instead. We take all legitimate reports seriously.
+Found a security vulnerability? Please **do not** open a public issue. Email us at [info@taskeye.xyz](mailto:info@taskeye.xyz) instead. We take all legitimate reports seriously.
 <br>
 
 ## 📈 Analytics
 
-Worklenz uses Google Analytics to better understand how the application is used - helping us prioritize improvements and make smarter product decisions.
+TaskEye uses Google Analytics to better understand how the application is used - helping us prioritize improvements and make smarter product decisions.
 
 **What we track:**
 - 📊 Anonymous usage statistics
@@ -425,49 +425,49 @@ Worklenz uses Google Analytics to better understand how the application is used 
 **Your privacy matters:**
 - 🔘 Analytics is **opt-in only** - we never collect data without your consent
 - 🙈 No personal information is ever collected
-- 🚪 You can **opt-out at any time** by clearing your browser's local storage for the Worklenz domain, or clicking "Decline" in the analytics notice
+- 🚪 You can **opt-out at any time** by clearing your browser's local storage for the TaskEye domain, or clicking "Decline" in the analytics notice
 - 📜 Data is stored and handled according to [Google's Privacy Policy](https://policies.google.com/privacy)
 <br/>
 
 ## 🤝 Contributing
 We love contributions from the community! Here's how you can help:
 
-- 🐛 [Report bugs](https://github.com/Worklenz/worklenz/issues/new)
-- ✨ [Request features](https://github.com/Worklenz/worklenz/issues/new)
+- 🐛 [Report bugs](https://github.com/TaskEye/TaskEye/issues/new)
+- ✨ [Request features](https://github.com/TaskEye/TaskEye/issues/new)
 - 📖 Improve the documentation
-- 💬 Share Worklenz with your team or write about it
+- 💬 Share TaskEye with your team or write about it
 
-Please read [CONTRIBUTING.md](https://github.com/Worklenz/worklenz/blob/main/CONTRIBUTING.md) before submitting a pull request.
+Please read [CONTRIBUTING.md](https://github.com/TaskEye/TaskEye/blob/main/CONTRIBUTING.md) before submitting a pull request.
 <br>
 
 ## Contributors
-Thanks to everyone who has contributed to Worklenz! 💙
+Thanks to everyone who has contributed to TaskEye! 💙
 
-[![Contributors](https://contrib.rocks/image?repo=Worklenz/worklenz)](https://github.com/Worklenz/worklenz/graphs/contributors)
+[![Contributors](https://contrib.rocks/image?repo=TaskEye/TaskEye)](https://github.com/TaskEye/TaskEye/graphs/contributors)
 <br>
 
 ## 💙 Community
-Join the Worklenz community:
+Join the TaskEye community:
 
 - 💬 [Discord Server](https://discord.gg/6Qmm839mgr) - chat with contributors and users
-- 🐙 [GitHub Discussions](https://github.com/Worklenz/worklenz/discussions) - longer form conversations
-- 🐦 Follow updates on our [website](https://worklenz.com)
+- 🐙 [GitHub Discussions](https://github.com/TaskEye/TaskEye/discussions) - longer form conversations
+- 🐦 Follow updates on our [website](https://taskeye.xyz)
 
-We follow a [Code of Conduct](https://github.com/Worklenz/worklenz/blob/main/CODE_OF_CONDUCT.md) across all community spaces.
+We follow a [Code of Conduct](https://github.com/TaskEye/TaskEye/blob/main/CODE_OF_CONDUCT.md) across all community spaces.
 <br>
 
 ## 📄 License
 
-Worklenz is open source, released under the [GNU Affero General Public License v3.0](https://github.com/Worklenz/worklenz/blob/main/LICENSE).
+TaskEye is open source, released under the [GNU Affero General Public License v3.0](https://github.com/TaskEye/TaskEye/blob/main/LICENSE).
 
-By contributing to Worklenz, you agree your contributions will be licensed under AGPL v3.0.
+By contributing to TaskEye, you agree your contributions will be licensed under AGPL v3.0.
 <br>
 
 ---
 <br>
 <div align="center">
-  <strong>Built with 💙 by the Worklenz team and amazing contributors around the world.</strong>
+  <strong>Built with 💙 by the TaskEye team and amazing contributors around the world.</strong>
   <br/>
-  <a href="https://worklenz.com">www.worklenz.com</a>
+  <a href="https://taskeye.xyz">www.taskeye.xyz</a>
 </div>
 
