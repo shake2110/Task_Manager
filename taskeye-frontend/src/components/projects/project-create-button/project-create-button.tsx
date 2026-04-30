@@ -129,7 +129,8 @@ const CreateProjectButton: React.FC<CreateProjectButtonProps> = ({ className }) 
   return (
     <div className={className}>
       <Dropdown.Button
-        className="flat-btn-primary h-12"
+        type="primary"
+        style={{ height: '40px' }}
         trigger={['click']}
         icon={<DownOutlined />}
         onClick={handleCreateProject}

@@ -7,13 +7,29 @@
 @tailwind utilities;
 
 :root {
+  /* Clean Professional Light Theme */
   --flat-bg: #FFFFFF;
   --flat-fg: #111827;
-  --flat-primary: #3B82F6;
+  --flat-fg-muted: #6B7280;
+  --flat-primary: #2563EB; /* Professional Blue */
   --flat-secondary: #10B981;
   --flat-accent: #F59E0B;
-  --flat-muted: #F3F4F6;
+  --flat-muted: #F9FAFB; /* Very subtle gray background */
+  --flat-card-bg: #FFFFFF;
   --flat-border: #E5E7EB;
+}
+
+html.dark {
+  /* Clean Professional Dark Theme */
+  --flat-bg: #030712; /* Deep dark gray */
+  --flat-fg: #F9FAFB; /* Off-white text */
+  --flat-fg-muted: #9CA3AF;
+  --flat-primary: #3B82F6; /* Slightly brighter blue for dark mode */
+  --flat-secondary: #34D399;
+  --flat-accent: #FBBF24;
+  --flat-muted: #111827; /* Darker background */
+  --flat-card-bg: #1F2937; /* Slightly elevated card bg */
+  --flat-border: #374151;
 }
 
 /* Base Styles */
@@ -21,72 +37,59 @@ html,
 body {
   background-color: var(--flat-muted) !important;
   color: var(--flat-fg) !important;
-  font-family: "Outfit", sans-serif !important;
+  font-family: "Inter", "Outfit", sans-serif !important;
 }
 
 /* Flat Utility Classes */
 
 .flat-card {
-  background-color: white !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 12px !important;
-  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-}
-
-.flat-card:hover {
-  transform: scale(1.02) !important;
+  background-color: var(--flat-card-bg) !important;
+  border: 1px solid var(--flat-border) !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; /* Extremely subtle professional shadow */
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  color: var(--flat-fg) !important;
 }
 
 .flat-btn-primary {
   background-color: var(--flat-primary) !important;
-  color: white !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
+  color: #FFFFFF !important;
+  border: 1px solid transparent !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
   transition: all 0.2s ease !important;
 }
 
 .flat-btn-primary:hover {
-  transform: scale(1.05) !important;
-  filter: brightness(1.1) !important;
+  opacity: 0.9 !important;
 }
 
 .flat-btn-secondary {
-  background-color: var(--flat-muted) !important;
-  color: var(--flat-fg) !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
+  background-color: transparent !important;
+  color: var(--flat-fg-muted) !important;
+  border: 1px solid var(--flat-border) !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
   transition: all 0.2s ease !important;
 }
 
 .flat-btn-secondary:hover {
-  transform: scale(1.05) !important;
   background-color: var(--flat-border) !important;
+  color: var(--flat-fg) !important;
 }
 
 .flat-btn-accent {
   background-color: var(--flat-accent) !important;
-  color: white !important;
+  color: #FFFFFF !important;
   border: none !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  transition: all 0.2s ease !important;
-}
-
-.flat-btn-accent:hover {
-  transform: scale(1.05) !important;
-  filter: brightness(1.1) !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
 }
 
 .flat-heading {
-  font-weight: 800 !important;
-  letter-spacing: -0.03em !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
   color: var(--flat-fg) !important;
 }
 
@@ -95,12 +98,8 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  background-color: white;
-  transition: transform 0.2s ease;
-}
-
-.group:hover .flat-icon-container {
-  transform: scale(1.1);
+  background-color: var(--flat-card-bg);
+  border: 1px solid var(--flat-border);
 }
 
 .ps__rail-y {
