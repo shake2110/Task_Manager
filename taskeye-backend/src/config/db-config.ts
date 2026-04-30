@@ -1,7 +1,7 @@
 import { isProduction } from "../shared/utils";
 
 const config: any = {
-  max: +(process.env.DB_MAX_CLIENTS || "10"),
+  max: +(process.env.DB_MAX_CLIENTS || "5"),
   idleTimeoutMillis: 30000,
 };
 
