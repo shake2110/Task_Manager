@@ -161,24 +161,11 @@ app.post("/webhook/emails/reply", safeControllerFunction(AwsSesController.handle
 
 // Static file serving
 if (isProduction()) {
-  app.use(express.static(path.join(__dirname, "build"), {
+  const buildPath = path.join(__dirname, "build");
+  app.use(express.static(buildPath, {
     maxAge: "1y",
     etag: false,
   }));
-
-  // Handle compressed files
-  app.get("*.js", (req, res, next) => {
-    if (req.header("Accept-Encoding")?.includes("br")) {
-      req.url = `${req.url}.br`;
-      res.set("Content-Encoding", "br");
-      res.set("Content-Type", "application/javascript; charset=UTF-8");
-    } else if (req.header("Accept-Encoding")?.includes("gzip")) {
-      req.url = `${req.url}.gz`;
-      res.set("Content-Encoding", "gzip");
-      res.set("Content-Type", "application/javascript; charset=UTF-8");
-    }
-    next();
-  });
 } else {
   app.use(express.static(path.join(__dirname, "public")));
 }
