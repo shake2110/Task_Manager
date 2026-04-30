@@ -84,7 +84,7 @@ const CreateProjectButton: React.FC<CreateProjectButtonProps> = ({ className }) 
         });
         if (res.done) {
           navigate(
-            `/taskeye/projects/${res.body.project_id}?tab=tasks-list&pinned_tab=tasks-list`
+            `/taskeye/projects/${res.body.id}?tab=tasks-list&pinned_tab=tasks-list`
           );
         }
       } else {
@@ -93,7 +93,7 @@ const CreateProjectButton: React.FC<CreateProjectButtonProps> = ({ className }) 
         });
         if (res.done) {
           navigate(
-            `/taskeye/projects/${res.body.project_id}?tab=tasks-list&pinned_tab=tasks-list`
+            `/taskeye/projects/${res.body.id}?tab=tasks-list&pinned_tab=tasks-list`
           );
         }
       }
