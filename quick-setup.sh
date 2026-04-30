@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # ============================================================================
-# Worklenz Quick Setup Script
+# TaskEye Quick Setup Script
 # ============================================================================
 # This script automates the setup process:
 # 1. Checks for .env file
 # 2. Auto-generates all secrets
 # 3. Configures URLs based on DOMAIN variable
 # 4. Sets up SSL (self-signed for localhost, Let's Encrypt for production)
-# 5. Installs and starts Worklenz
+# 5. Installs and starts TaskEye
 # ============================================================================
 
 set -e
@@ -55,7 +55,7 @@ print_header() {
     echo "         W O R K L E N Z                     "
     echo -e "${NC}"
     echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${CYAN}║           ${BLUE}Worklenz Quick Setup - Automated Installation${CYAN}              ║${NC}"
+    echo -e "${CYAN}║           ${BLUE}TaskEye Quick Setup - Automated Installation${CYAN}              ║${NC}"
     echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -118,7 +118,7 @@ echo "  1. Create .env file if it doesn't exist"
 echo "  2. Auto-generate all security secrets"
 echo "  3. Configure URLs based on your domain"
 echo "  4. Set up SSL certificates"
-echo "  5. Install and start Worklenz"
+echo "  5. Install and start TaskEye"
 echo ""
 
 # Check if .env exists
@@ -169,7 +169,7 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 echo "Enter your domain name:"
 echo "  - Recommended for local testing: enter 'localhost'"
-echo "  - For production: enter your domain (e.g., worklenz.example.com)"
+echo "  - For production: enter your domain (e.g., TaskEye.example.com)"
 echo ""
 read -p "Domain [localhost]: " domain
 domain=${domain:-localhost}
@@ -205,8 +205,8 @@ if [[ "$build_images" =~ ^[Yy]$ ]]; then
         # Update docker-compose.yaml with the new Docker Hub username
         print_info "Updating docker-compose.yaml with Docker Hub username..."
         if [ -f "$SCRIPT_DIR/docker-compose.yaml" ]; then
-            sed -i.bak "s|image: .*/worklenz-backend:latest|image: $docker_username/worklenz-backend:latest|" "$SCRIPT_DIR/docker-compose.yaml"
-            sed -i.bak "s|image: .*/worklenz-frontend:latest|image: $docker_username/worklenz-frontend:latest|" "$SCRIPT_DIR/docker-compose.yaml"
+            sed -i.bak "s|image: .*/TaskEye-backend:latest|image: $docker_username/TaskEye-backend:latest|" "$SCRIPT_DIR/docker-compose.yaml"
+            sed -i.bak "s|image: .*/TaskEye-frontend:latest|image: $docker_username/TaskEye-frontend:latest|" "$SCRIPT_DIR/docker-compose.yaml"
             rm -f "$SCRIPT_DIR/docker-compose.yaml.bak"
         fi
 
@@ -224,7 +224,7 @@ else
     echo ""
     echo "Do you want to use a custom Docker Hub username for pulling images?"
     echo "  - Answer 'yes' to use your own pre-built images"
-    echo "  - Answer 'no' to use default images (chamikajaycey/worklenz-*)"
+    echo "  - Answer 'no' to use default images (chamikajaycey/TaskEye-*)"
     echo ""
     read -p "Use custom Docker Hub username? (y/N): " use_custom_username
 
@@ -237,8 +237,8 @@ else
             # Update docker-compose.yaml with the new Docker Hub username
             print_info "Updating docker-compose.yaml with Docker Hub username..."
             if [ -f "$SCRIPT_DIR/docker-compose.yaml" ]; then
-                sed -i.bak "s|image: .*/worklenz-backend:latest|image: $docker_username/worklenz-backend:latest|" "$SCRIPT_DIR/docker-compose.yaml"
-                sed -i.bak "s|image: .*/worklenz-frontend:latest|image: $docker_username/worklenz-frontend:latest|" "$SCRIPT_DIR/docker-compose.yaml"
+                sed -i.bak "s|image: .*/TaskEye-backend:latest|image: $docker_username/TaskEye-backend:latest|" "$SCRIPT_DIR/docker-compose.yaml"
+                sed -i.bak "s|image: .*/TaskEye-frontend:latest|image: $docker_username/TaskEye-frontend:latest|" "$SCRIPT_DIR/docker-compose.yaml"
                 rm -f "$SCRIPT_DIR/docker-compose.yaml.bak"
 
                 print_success "docker-compose.yaml updated to use: $docker_username"
@@ -318,12 +318,12 @@ echo -e "${CYAN}╚════════════════════�
 echo ""
 
 if [[ "$domain" == "localhost" ]]; then
-    echo -e "  ${GREEN}Access Worklenz at:${NC} ${BLUE}https://localhost${NC}"
+    echo -e "  ${GREEN}Access TaskEye at:${NC} ${BLUE}https://localhost${NC}"
     echo ""
     echo -e "  ${YELLOW}Note:${NC} You'll see a browser warning about the self-signed certificate."
     echo "  This is normal for localhost. Click 'Advanced' and 'Proceed' to access."
 else
-    echo -e "  ${GREEN}Access Worklenz at:${NC} ${BLUE}https://$domain${NC}"
+    echo -e "  ${GREEN}Access TaskEye at:${NC} ${BLUE}https://$domain${NC}"
     echo ""
     echo -e "  ${YELLOW}Important:${NC} Ensure your domain's DNS A record points to this server's IP."
 fi

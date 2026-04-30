@@ -1,5 +1,5 @@
-# Production-ready Dockerfile for Worklenz Backend
-# Based on official Worklenz backend structure
+# Production-ready Dockerfile for TaskEye Backend
+# Based on official TaskEye backend structure
 # Multi-stage build for optimal image size and security
 
 # Stage 1: Build stage
@@ -36,7 +36,7 @@ RUN echo "$(date '+%Y-%m-%d %H:%M:%S')" > build/RELEASE_VERSION
 FROM node:20-slim
 
 # Create non-root user for security
-RUN groupadd -r worklenz && useradd -r -g worklenz worklenz
+RUN groupadd -r TaskEye && useradd -r -g TaskEye TaskEye
 
 # Install runtime dependencies only (no build tools needed if we copy from builder)
 RUN apt-get update && apt-get install -y \
@@ -57,20 +57,20 @@ COPY package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
 
 # Copy built application from builder stage
-COPY --from=builder --chown=worklenz:worklenz /app/build ./build
+COPY --from=builder --chown=TaskEye:TaskEye /app/build ./build
 
 # Copy release file from builder
-COPY --from=builder --chown=worklenz:worklenz /app/build/RELEASE_VERSION ./release
+COPY --from=builder --chown=TaskEye:TaskEye /app/build/RELEASE_VERSION ./release
 
 # Copy email templates
-COPY --from=builder --chown=worklenz:worklenz /app/worklenz-email-templates ./worklenz-email-templates
+COPY --from=builder --chown=TaskEye:TaskEye /app/TaskEye-email-templates ./TaskEye-email-templates
 
 # Create necessary directories
 RUN mkdir -p /app/logs && \
-    chown -R worklenz:worklenz /app
+    chown -R TaskEye:TaskEye /app
 
 # Switch to non-root user
-USER worklenz
+USER TaskEye
 
 # Expose backend port
 EXPOSE 3000

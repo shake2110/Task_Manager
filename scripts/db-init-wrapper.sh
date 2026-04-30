@@ -62,7 +62,7 @@ execute_sql() {
     fi
 }
 
-# Initialize schema in correct order (based on Worklenz's 00_init.sh)
+# Initialize schema in correct order (based on TaskEye's 00_init.sh)
 echo ""
 echo "Step 1: Installing PostgreSQL extensions..."
 execute_sql "$DB_DIR/0_extensions.sql" "Extensions"

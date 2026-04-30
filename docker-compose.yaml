@@ -2,22 +2,22 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:15.10-alpine
-    container_name: worklenz-postgres
+    container_name: TaskEye-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${DB_NAME:-worklenz_db}
+      POSTGRES_DB: ${DB_NAME:-TaskEye_db}
       POSTGRES_USER: ${DB_USER:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required}
       POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=en_US.UTF-8 --lc-ctype=en_US.UTF-8"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./scripts/db-init-wrapper.sh:/docker-entrypoint-initdb.d/00-init-wrapper.sh:ro
-      - ./worklenz-backend/database:/database:ro
+      - ./TaskEye-backend/database:/database:ro
       - ./backups:/pg_backups
     networks:
-      - worklenz-backend
+      - TaskEye-backend
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-worklenz_db}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-TaskEye_db}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -28,7 +28,7 @@ services:
   # Database Backup Service
   db-backup:
     image: postgres:15.10-alpine
-    container_name: worklenz-db-backup
+    container_name: TaskEye-db-backup
     restart: unless-stopped
     depends_on:
       postgres:
@@ -36,20 +36,19 @@ services:
     environment:
       PGHOST: postgres
       PGPORT: 5432
-      PGDATABASE: ${DB_NAME:-worklenz_db}
+      PGDATABASE: ${DB_NAME:-TaskEye_db}
       PGUSER: ${DB_USER:-postgres}
       PGPASSWORD: ${DB_PASSWORD}
       BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-30}
     volumes:
       - ./backups:/backups
     networks:
-      - worklenz-backend
+      - TaskEye-backend
     entrypoint: /bin/sh
     command: >
-      -c "
-      while true; do
+      -c " while true; do
         echo 'Running database backup...'
-        BACKUP_FILE=\"/backups/worklenz_backup_$$(date +%Y%m%d_%H%M%S).sql\"
+        BACKUP_FILE=\"/backups/TaskEye_backup_$$(date +%Y%m%d_%H%M%S).sql\"
         pg_dump > \"$$BACKUP_FILE\" 2>&1
         if [ $$? -eq 0 ]; then
           echo \"Database dump completed: $$BACKUP_FILE\"
@@ -57,7 +56,7 @@ services:
           if [ $$? -eq 0 ]; then
             echo \"Backup compression completed: $$BACKUP_FILE.gz\"
             echo \"Cleaning up backups older than $$BACKUP_RETENTION_DAYS days...\"
-            find /backups -name 'worklenz_backup_*.sql.gz' -mtime +$$BACKUP_RETENTION_DAYS -delete
+            find /backups -name 'TaskEye_backup_*.sql.gz' -mtime +$$BACKUP_RETENTION_DAYS -delete
             echo \"Cleanup completed successfully\"
           else
             echo \"ERROR: Backup compression failed for $$BACKUP_FILE\"
@@ -73,23 +72,22 @@ services:
         fi
         echo 'Next backup in 24 hours...'
         sleep 86400
-      done
-      "
+      done "
     profiles:
       - backup
 
   # Redis Cache (Express mode - default)
   redis:
     image: redis:7.4-alpine
-    container_name: worklenz-redis
+    container_name: TaskEye-redis
     restart: unless-stopped
-    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-worklenz_redis_pass}
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-TaskEye_redis_pass}
     volumes:
       - redis_data:/data
     networks:
-      - worklenz-backend
+      - TaskEye-backend
     healthcheck:
-      test: ["CMD", "sh", "-c", "redis-cli -a ${REDIS_PASSWORD:-worklenz_redis_pass} ping"]
+      test: [ "CMD", "sh", "-c", "redis-cli -a ${REDIS_PASSWORD:-TaskEye_redis_pass} ping" ]
       interval: 10s
       timeout: 3s
       retries: 5
@@ -102,7 +100,7 @@ services:
   # MinIO Object Storage (Express mode - default)
   minio:
     image: minio/minio:latest
-    container_name: worklenz-minio
+    container_name: TaskEye-minio
     restart: unless-stopped
     command: server /data --console-address ":9001"
     environment:
@@ -112,9 +110,9 @@ services:
     volumes:
       - minio_data:/data
     networks:
-      - worklenz-backend
+      - TaskEye-backend
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
       interval: 30s
       timeout: 20s
       retries: 3
@@ -127,36 +125,28 @@ services:
   # MinIO Client - Create initial bucket (Express mode)
   minio-init:
     image: minio/mc:latest
-    container_name: worklenz-minio-init
+    container_name: TaskEye-minio-init
     depends_on:
       minio:
         condition: service_healthy
     environment:
       MINIO_ROOT_USER: ${AWS_ACCESS_KEY_ID:-minioadmin}
       MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY:-minioadmin}
-      MINIO_BUCKET: ${AWS_BUCKET:-worklenz-bucket}
+      MINIO_BUCKET: ${AWS_BUCKET:-TaskEye-bucket}
     networks:
-      - worklenz-backend
+      - TaskEye-backend
     entrypoint: >
-      /bin/sh -c "
-      echo 'Waiting for MinIO to be ready...';
-      sleep 5;
-      /usr/bin/mc alias set worklenz http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD};
-      /usr/bin/mc mb worklenz/$${MINIO_BUCKET} --ignore-existing;
-      /usr/bin/mc anonymous set download worklenz/$${MINIO_BUCKET};
-      echo 'MinIO bucket created and configured successfully';
-      exit 0;
-      "
+      /bin/sh -c " echo 'Waiting for MinIO to be ready...'; sleep 5; /usr/bin/mc alias set TaskEye http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD}; /usr/bin/mc mb TaskEye/$${MINIO_BUCKET} --ignore-existing; /usr/bin/mc anonymous set download TaskEye/$${MINIO_BUCKET}; echo 'MinIO bucket created and configured successfully'; exit 0; "
     profiles:
       - express
 
   # Backend API
   backend:
-    image: chamikajaycey/worklenz-backend:${BACKEND_VERSION:-2.1.6}
+    image: chamikajaycey/TaskEye-backend:${BACKEND_VERSION:-2.1.6}
     build:
-      context: ./worklenz-backend
+      context: ./TaskEye-backend
       dockerfile: Dockerfile
-    container_name: worklenz-backend
+    container_name: TaskEye-backend
     restart: unless-stopped
     depends_on:
       postgres:
@@ -167,12 +157,12 @@ services:
       PORT: 3000
       SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET is required}
       COOKIE_SECRET: ${COOKIE_SECRET:?COOKIE_SECRET is required}
-      SESSION_NAME: ${SESSION_NAME:-worklenz.sid}
+      SESSION_NAME: ${SESSION_NAME:-TaskEye.sid}
 
       # Database Configuration
       DB_HOST: postgres
       DB_PORT: 5432
-      DB_NAME: ${DB_NAME:-worklenz_db}
+      DB_NAME: ${DB_NAME:-TaskEye_db}
       DB_USER: ${DB_USER:-postgres}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_MAX_CLIENTS: ${DB_MAX_CLIENTS:-50}
@@ -189,12 +179,12 @@ services:
       # Redis Configuration
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      REDIS_PASSWORD: ${REDIS_PASSWORD:-worklenz_redis_pass}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-TaskEye_redis_pass}
       REDIS_DB: ${REDIS_DB:-0}
 
       # S3/MinIO Configuration (Express mode default)
       AWS_REGION: ${AWS_REGION:-us-east-1}
-      AWS_BUCKET: ${AWS_BUCKET:-worklenz-bucket}
+      AWS_BUCKET: ${AWS_BUCKET:-TaskEye-bucket}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-minioadmin}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-minioadmin}
       S3_URL: ${S3_URL:-http://minio:9000}
@@ -227,10 +217,10 @@ services:
     volumes:
       - backend_logs:/app/logs
     networks:
-      - worklenz-backend
-      - worklenz-frontend
+      - TaskEye-backend
+      - TaskEye-frontend
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/public/health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:3000/public/health" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -240,11 +230,11 @@ services:
 
   # Frontend Application
   frontend:
-    image: chamikajaycey/worklenz-frontend:${FRONTEND_VERSION:-2.1.6}
+    image: chamikajaycey/TaskEye-frontend:${FRONTEND_VERSION:-2.1.6}
     build:
-      context: ./worklenz-frontend
+      context: ./TaskEye-frontend
       dockerfile: Dockerfile
-    container_name: worklenz-frontend
+    container_name: TaskEye-frontend
     restart: unless-stopped
     depends_on:
       backend:
@@ -253,16 +243,16 @@ services:
       # Runtime environment variables (injected at startup)
       VITE_API_URL: ${VITE_API_URL}
       VITE_SOCKET_URL: ${VITE_SOCKET_URL}
-      VITE_APP_TITLE: ${VITE_APP_TITLE:-Worklenz}
+      VITE_APP_TITLE: ${VITE_APP_TITLE:-TaskEye}
       VITE_APP_ENV: production
       VITE_ENABLE_RECAPTCHA: ${VITE_ENABLE_RECAPTCHA:-false}
       VITE_RECAPTCHA_SITE_KEY: ${VITE_RECAPTCHA_SITE_KEY:-}
       VITE_ENABLE_GOOGLE_LOGIN: ${VITE_ENABLE_GOOGLE_LOGIN:-false}
       VITE_ENABLE_SURVEY_MODAL: ${VITE_ENABLE_SURVEY_MODAL:-false}
     networks:
-      - worklenz-frontend
+      - TaskEye-frontend
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      test: [ "CMD", "curl", "-f", "http://localhost:5000" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -273,7 +263,7 @@ services:
   # Nginx Reverse Proxy
   nginx:
     image: nginx:1.27-alpine
-    container_name: worklenz-nginx
+    container_name: TaskEye-nginx
     restart: unless-stopped
     depends_on:
       frontend:
@@ -291,9 +281,9 @@ services:
       - certbot_www:/var/www/certbot:ro
       - nginx_logs:/var/log/nginx
     networks:
-      - worklenz-frontend
+      - TaskEye-frontend
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/health"]
+      test: [ "CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/health" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -304,7 +294,7 @@ services:
   # Certbot for Let's Encrypt SSL
   certbot:
     image: certbot/certbot:v3.1.0
-    container_name: worklenz-certbot
+    container_name: TaskEye-certbot
     restart: unless-stopped
     volumes:
       - certbot_certs:/etc/letsencrypt
@@ -314,10 +304,10 @@ services:
       - ssl
 
 networks:
-  worklenz-backend:
+  TaskEye-backend:
     driver: bridge
     internal: true
-  worklenz-frontend:
+  TaskEye-frontend:
     driver: bridge
 
 volumes:

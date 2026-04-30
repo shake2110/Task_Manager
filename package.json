@@ -8,7 +8,7 @@
   "scripts": {
     "build:frontend": "cd taskeye-frontend && npm install --include=dev && npm run build",
     "build:backend": "cd taskeye-backend && npm install --include=dev && npm run build:prod",
-    "copy:frontend": "npx cpx2 'taskeye-frontend/build/**' taskeye-backend/build/build",
+    "copy:frontend": "mkdir -p taskeye-backend/build/build && cp -R taskeye-frontend/build/* taskeye-backend/build/build/",
     "build": "npm install --include=dev && npm run build:frontend && npm run build:backend && npm run copy:frontend",
     "start": "node taskeye-backend/build/bin/www.js",
     "migrate": "node scripts/migrate.js"

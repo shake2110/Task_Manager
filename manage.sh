@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # ============================================================================
-# Worklenz Local Management Script
+# TaskEye Local Management Script
 # ============================================================================
-# This script provides an interactive menu for managing local Worklenz deployment
+# This script provides an interactive menu for managing local TaskEye deployment
 # Supports both localhost (self-signed SSL) and production domains (Let's Encrypt)
 # ============================================================================
 
@@ -42,7 +42,7 @@ print_header() {
     echo "         W O R K L E N Z                     "
     echo -e "${NC}"
     echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${CYAN}║           ${BLUE}Worklenz Self-Hosted Management Console${CYAN}                    ║${NC}"
+    echo -e "${CYAN}║           ${BLUE}TaskEye Self-Hosted Management Console${CYAN}                    ║${NC}"
     echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════════╝${NC}"
     echo ""
 }
@@ -128,7 +128,7 @@ setup_self_signed_ssl() {
         openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
             -keyout "$SSL_DIR/key.pem" \
             -out "$SSL_DIR/cert.pem" \
-            -subj "/C=US/ST=State/L=City/O=Worklenz/CN=localhost" \
+            -subj "/C=US/ST=State/L=City/O=TaskEye/CN=localhost" \
             &> /dev/null
 
         chmod 644 "$SSL_DIR/cert.pem"
@@ -140,7 +140,7 @@ setup_self_signed_ssl() {
         docker run --rm -v "$SSL_DIR:/certs" alpine/openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
             -keyout /certs/key.pem \
             -out /certs/cert.pem \
-            -subj "/C=US/ST=State/L=City/O=Worklenz/CN=localhost" \
+            -subj "/C=US/ST=State/L=City/O=TaskEye/CN=localhost" \
             2>/dev/null
 
         chmod 644 "$SSL_DIR/cert.pem"
@@ -209,20 +209,20 @@ setup_letsencrypt_ssl() {
         # Update nginx config to use Let's Encrypt certificates
         print_info "Updating nginx configuration..."
         
-        cp "$SCRIPT_DIR/nginx/conf.d/worklenz.conf" "$SCRIPT_DIR/nginx/conf.d/worklenz.conf.bak"
+        cp "$SCRIPT_DIR/nginx/conf.d/TaskEye.conf" "$SCRIPT_DIR/nginx/conf.d/TaskEye.conf.bak"
         
         sed -i.tmp \
             -e "s|ssl_certificate /etc/nginx/ssl/cert.pem;|ssl_certificate /etc/letsencrypt/live/$domain/fullchain.pem;|" \
             -e "s|ssl_certificate_key /etc/nginx/ssl/key.pem;|ssl_certificate_key /etc/letsencrypt/live/$domain/privkey.pem;|" \
-            "$SCRIPT_DIR/nginx/conf.d/worklenz.conf"
+            "$SCRIPT_DIR/nginx/conf.d/TaskEye.conf"
         
-        rm -f "$SCRIPT_DIR/nginx/conf.d/worklenz.conf.tmp"
+        rm -f "$SCRIPT_DIR/nginx/conf.d/TaskEye.conf.tmp"
 
         # Update .env to enable SSL
         sed -i.bak 's/^ENABLE_SSL=.*/ENABLE_SSL=true/' "$ENV_FILE"
         
         print_success "Let's Encrypt SSL certificates obtained successfully!"
-        print_info "Backup saved: nginx/conf.d/worklenz.conf.bak"
+        print_info "Backup saved: nginx/conf.d/TaskEye.conf.bak"
         return 0
     else
         print_error "Failed to obtain Let's Encrypt certificate"
@@ -256,7 +256,7 @@ auto_setup_ssl() {
 
 start_services() {
     print_header
-    echo -e "${BLUE}Starting Worklenz Docker Environment...${NC}"
+    echo -e "${BLUE}Starting TaskEye Docker Environment...${NC}"
     echo ""
 
     # Check if .env exists, if not create from .env.example
@@ -303,10 +303,10 @@ start_services() {
     $compose_cmd ps
     echo ""
 
-    print_success "Worklenz started!"
+    print_success "TaskEye started!"
     echo ""
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "  ${GREEN}Access Worklenz at:${NC} ${VITE_API_URL:-https://localhost}"
+    echo -e "  ${GREEN}Access TaskEye at:${NC} ${VITE_API_URL:-https://localhost}"
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     
     if is_localhost; then
@@ -318,7 +318,7 @@ start_services() {
 
 stop_services() {
     print_header
-    echo -e "${BLUE}Stopping Worklenz Services${NC}"
+    echo -e "${BLUE}Stopping TaskEye Services${NC}"
     echo ""
 
     local compose_cmd=$(get_compose_cmd)
@@ -379,7 +379,7 @@ service_status() {
     echo ""
 
     # Check each service
-    docker ps --filter "name=worklenz-" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "worklenz-|NAMES"
+    docker ps --filter "name=TaskEye-" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "TaskEye-|NAMES"
 }
 
 # ============================================================================
@@ -388,7 +388,7 @@ service_status() {
 
 backup_data() {
     print_header
-    echo -e "${BLUE}Backup Worklenz Data${NC}"
+    echo -e "${BLUE}Backup TaskEye Data${NC}"
     echo ""
 
     load_env
@@ -405,19 +405,19 @@ backup_data() {
 
     # Backup database
     print_info "[1/4] Backing up PostgreSQL database..."
-    $compose_cmd exec -T postgres pg_dump -U "${DB_USER:-postgres}" "${DB_NAME:-worklenz_db}" > "$backup_dir/database.sql"
+    $compose_cmd exec -T postgres pg_dump -U "${DB_USER:-postgres}" "${DB_NAME:-TaskEye_db}" > "$backup_dir/database.sql"
     print_success "Database backed up"
 
     # Backup Redis data
     if [[ "${DEPLOYMENT_MODE:-express}" == "express" ]]; then
         print_info "[2/4] Backing up Redis data..."
         $compose_cmd exec -T redis redis-cli --raw SAVE > /dev/null 2>&1 || true
-        docker run --rm -v worklenz_redis_data:/data -v "$backup_dir:/backup" alpine tar czf "/backup/redis_data.tar.gz" -C /data . 2>/dev/null
+        docker run --rm -v TaskEye_redis_data:/data -v "$backup_dir:/backup" alpine tar czf "/backup/redis_data.tar.gz" -C /data . 2>/dev/null
         print_success "Redis data backed up"
 
         # Backup MinIO data
         print_info "[3/4] Backing up MinIO storage..."
-        docker run --rm -v worklenz_minio_data:/data -v "$backup_dir:/backup" alpine tar czf "/backup/minio_data.tar.gz" -C /data . 2>/dev/null
+        docker run --rm -v TaskEye_minio_data:/data -v "$backup_dir:/backup" alpine tar czf "/backup/minio_data.tar.gz" -C /data . 2>/dev/null
         print_success "MinIO storage backed up"
     else
         print_info "[2/4] Skipping Redis backup (advanced mode)"
@@ -432,10 +432,10 @@ backup_data() {
 
     # Create archive
     print_info "Creating backup archive..."
-    tar -czf "$BACKUP_DIR/worklenz_backup_$timestamp.tar.gz" -C "$BACKUP_DIR" "backup_$timestamp"
+    tar -czf "$BACKUP_DIR/TaskEye_backup_$timestamp.tar.gz" -C "$BACKUP_DIR" "backup_$timestamp"
     rm -rf "$backup_dir"
 
-    local backup_file="$BACKUP_DIR/worklenz_backup_$timestamp.tar.gz"
+    local backup_file="$BACKUP_DIR/TaskEye_backup_$timestamp.tar.gz"
     local backup_size=$(du -h "$backup_file" | cut -f1)
 
     echo ""
@@ -446,19 +446,19 @@ backup_data() {
     # Cleanup old backups
     local retention_days="${BACKUP_RETENTION_DAYS:-30}"
     print_info "Cleaning backups older than $retention_days days..."
-    find "$BACKUP_DIR" -name "worklenz_backup_*.tar.gz" -mtime +$retention_days -delete
+    find "$BACKUP_DIR" -name "TaskEye_backup_*.tar.gz" -mtime +$retention_days -delete
 }
 
 restore_data() {
     print_header
-    echo -e "${BLUE}Restore Worklenz Data${NC}"
+    echo -e "${BLUE}Restore TaskEye Data${NC}"
     echo ""
 
     # List available backups
     print_info "Available backups:"
     echo ""
     
-    local backups=($(ls -t "$BACKUP_DIR"/worklenz_backup_*.tar.gz 2>/dev/null))
+    local backups=($(ls -t "$BACKUP_DIR"/TaskEye_backup_*.tar.gz 2>/dev/null))
 
     if [ ${#backups[@]} -eq 0 ]; then
         print_error "No backups found in $BACKUP_DIR"
@@ -469,7 +469,7 @@ restore_data() {
     for backup in "${backups[@]}"; do
         local size=$(du -h "$backup" | cut -f1)
         local filename=$(basename "$backup")
-        local date_str=$(echo "$filename" | sed 's/worklenz_backup_\(.*\)\.tar\.gz/\1/' | sed 's/_/ /; s/_/:/')
+        local date_str=$(echo "$filename" | sed 's/TaskEye_backup_\(.*\)\.tar\.gz/\1/' | sed 's/_/ /; s/_/:/')
         echo "$i. $date_str ($size)"
         i=$((i + 1))
     done
@@ -520,21 +520,21 @@ restore_data() {
     sleep 10
 
     if [ -f "$temp_dir/$backup_content/database.sql" ]; then
-        $compose_cmd exec -T postgres psql -U "${DB_USER:-postgres}" -d "${DB_NAME:-worklenz_db}" < "$temp_dir/$backup_content/database.sql" 2>/dev/null
+        $compose_cmd exec -T postgres psql -U "${DB_USER:-postgres}" -d "${DB_NAME:-TaskEye_db}" < "$temp_dir/$backup_content/database.sql" 2>/dev/null
         print_success "Database restored"
     fi
 
     # Restore Redis
     if [ -f "$temp_dir/$backup_content/redis_data.tar.gz" ]; then
         print_info "Restoring Redis data..."
-        docker run --rm -v worklenz_redis_data:/data -v "$temp_dir/$backup_content:/backup" alpine sh -c "rm -rf /data/* && tar xzf /backup/redis_data.tar.gz -C /data"
+        docker run --rm -v TaskEye_redis_data:/data -v "$temp_dir/$backup_content:/backup" alpine sh -c "rm -rf /data/* && tar xzf /backup/redis_data.tar.gz -C /data"
         print_success "Redis data restored"
     fi
 
     # Restore MinIO
     if [ -f "$temp_dir/$backup_content/minio_data.tar.gz" ]; then
         print_info "Restoring MinIO storage..."
-        docker run --rm -v worklenz_minio_data:/data -v "$temp_dir/$backup_content:/backup" alpine sh -c "rm -rf /data/* && tar xzf /backup/minio_data.tar.gz -C /data"
+        docker run --rm -v TaskEye_minio_data:/data -v "$temp_dir/$backup_content:/backup" alpine sh -c "rm -rf /data/* && tar xzf /backup/minio_data.tar.gz -C /data"
         print_success "MinIO storage restored"
     fi
 
@@ -623,7 +623,7 @@ auto_configure_env() {
     fi
 
     # Update Redis password if it's still default
-    if [[ "$REDIS_PASSWORD" == "worklenz_redis_pass" ]]; then
+    if [[ "$REDIS_PASSWORD" == "TaskEye_redis_pass" ]]; then
         print_info "Generating secure REDIS_PASSWORD..."
         local redis_password=$(generate_secret | cut -c1-32)
         sed -i.bak "s/^REDIS_PASSWORD=.*/REDIS_PASSWORD=$redis_password/" "$ENV_FILE"
@@ -829,16 +829,16 @@ build_images() {
     if [ "$backend_version" == "latest" ]; then
         # Build only with latest tag
         docker build \
-            -f "$SCRIPT_DIR/worklenz-backend/Dockerfile" \
-            -t "${docker_username}/worklenz-backend:latest" \
-            "$SCRIPT_DIR/worklenz-backend"
+            -f "$SCRIPT_DIR/TaskEye-backend/Dockerfile" \
+            -t "${docker_username}/TaskEye-backend:latest" \
+            "$SCRIPT_DIR/TaskEye-backend"
     else
         # Build with both version tag and latest tag
         docker build \
-            -f "$SCRIPT_DIR/worklenz-backend/Dockerfile" \
-            -t "${docker_username}/worklenz-backend:${backend_version}" \
-            -t "${docker_username}/worklenz-backend:latest" \
-            "$SCRIPT_DIR/worklenz-backend"
+            -f "$SCRIPT_DIR/TaskEye-backend/Dockerfile" \
+            -t "${docker_username}/TaskEye-backend:${backend_version}" \
+            -t "${docker_username}/TaskEye-backend:latest" \
+            "$SCRIPT_DIR/TaskEye-backend"
     fi
 
     if [ $? -ne 0 ]; then
@@ -848,10 +848,10 @@ build_images() {
 
     print_success "Backend image built successfully!"
     if [ "$backend_version" != "latest" ]; then
-        print_info "Tagged as: ${docker_username}/worklenz-backend:${backend_version}"
-        print_info "Tagged as: ${docker_username}/worklenz-backend:latest"
+        print_info "Tagged as: ${docker_username}/TaskEye-backend:${backend_version}"
+        print_info "Tagged as: ${docker_username}/TaskEye-backend:latest"
     else
-        print_info "Tagged as: ${docker_username}/worklenz-backend:latest"
+        print_info "Tagged as: ${docker_username}/TaskEye-backend:latest"
     fi
     echo ""
 
@@ -862,16 +862,16 @@ build_images() {
     if [ "$frontend_version" == "latest" ]; then
         # Build only with latest tag
         docker build \
-            -f "$SCRIPT_DIR/worklenz-frontend/Dockerfile" \
-            -t "${docker_username}/worklenz-frontend:latest" \
-            "$SCRIPT_DIR/worklenz-frontend"
+            -f "$SCRIPT_DIR/TaskEye-frontend/Dockerfile" \
+            -t "${docker_username}/TaskEye-frontend:latest" \
+            "$SCRIPT_DIR/TaskEye-frontend"
     else
         # Build with both version tag and latest tag
         docker build \
-            -f "$SCRIPT_DIR/worklenz-frontend/Dockerfile" \
-            -t "${docker_username}/worklenz-frontend:${frontend_version}" \
-            -t "${docker_username}/worklenz-frontend:latest" \
-            "$SCRIPT_DIR/worklenz-frontend"
+            -f "$SCRIPT_DIR/TaskEye-frontend/Dockerfile" \
+            -t "${docker_username}/TaskEye-frontend:${frontend_version}" \
+            -t "${docker_username}/TaskEye-frontend:latest" \
+            "$SCRIPT_DIR/TaskEye-frontend"
     fi
 
     if [ $? -ne 0 ]; then
@@ -881,10 +881,10 @@ build_images() {
 
     print_success "Frontend image built successfully!"
     if [ "$frontend_version" != "latest" ]; then
-        print_info "Tagged as: ${docker_username}/worklenz-frontend:${frontend_version}"
-        print_info "Tagged as: ${docker_username}/worklenz-frontend:latest"
+        print_info "Tagged as: ${docker_username}/TaskEye-frontend:${frontend_version}"
+        print_info "Tagged as: ${docker_username}/TaskEye-frontend:latest"
     else
-        print_info "Tagged as: ${docker_username}/worklenz-frontend:latest"
+        print_info "Tagged as: ${docker_username}/TaskEye-frontend:latest"
     fi
     echo ""
 
@@ -892,10 +892,10 @@ build_images() {
     print_info "Updating docker-compose.yaml..."
 
     # Update backend image in docker-compose.yaml to match built version
-    sed -i.bak "s|image: .*/worklenz-backend:\${BACKEND_VERSION:-.*}|image: ${docker_username}/worklenz-backend:\${BACKEND_VERSION:-${backend_version}}|" "$DOCKER_COMPOSE_FILE"
+    sed -i.bak "s|image: .*/TaskEye-backend:\${BACKEND_VERSION:-.*}|image: ${docker_username}/TaskEye-backend:\${BACKEND_VERSION:-${backend_version}}|" "$DOCKER_COMPOSE_FILE"
 
     # Update frontend image in docker-compose.yaml to match built version
-    sed -i.bak "s|image: .*/worklenz-frontend:\${FRONTEND_VERSION:-.*}|image: ${docker_username}/worklenz-frontend:\${FRONTEND_VERSION:-${frontend_version}}|" "$DOCKER_COMPOSE_FILE"
+    sed -i.bak "s|image: .*/TaskEye-frontend:\${FRONTEND_VERSION:-.*}|image: ${docker_username}/TaskEye-frontend:\${FRONTEND_VERSION:-${frontend_version}}|" "$DOCKER_COMPOSE_FILE"
 
     rm -f "$DOCKER_COMPOSE_FILE.bak"
 
@@ -905,14 +905,14 @@ build_images() {
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     if [ "$backend_version" != "latest" ]; then
         echo -e "  ${GREEN}Backend Images:${NC}"
-        echo -e "    - ${docker_username}/worklenz-backend:${backend_version}"
-        echo -e "    - ${docker_username}/worklenz-backend:latest"
+        echo -e "    - ${docker_username}/TaskEye-backend:${backend_version}"
+        echo -e "    - ${docker_username}/TaskEye-backend:latest"
         echo -e "  ${GREEN}Frontend Images:${NC}"
-        echo -e "    - ${docker_username}/worklenz-frontend:${frontend_version}"
-        echo -e "    - ${docker_username}/worklenz-frontend:latest"
+        echo -e "    - ${docker_username}/TaskEye-frontend:${frontend_version}"
+        echo -e "    - ${docker_username}/TaskEye-frontend:latest"
     else
-        echo -e "  ${GREEN}Backend Image:${NC} ${docker_username}/worklenz-backend:latest"
-        echo -e "  ${GREEN}Frontend Image:${NC} ${docker_username}/worklenz-frontend:latest"
+        echo -e "  ${GREEN}Backend Image:${NC} ${docker_username}/TaskEye-backend:latest"
+        echo -e "  ${GREEN}Frontend Image:${NC} ${docker_username}/TaskEye-frontend:latest"
     fi
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo ""
@@ -938,13 +938,13 @@ build_images() {
         # Push backend images
         print_info "Pushing backend images..."
         if [ "$backend_version" != "latest" ]; then
-            docker push "${docker_username}/worklenz-backend:${backend_version}"
+            docker push "${docker_username}/TaskEye-backend:${backend_version}"
             if [ $? -ne 0 ]; then
                 print_error "Backend image push failed!"
                 return 1
             fi
         fi
-        docker push "${docker_username}/worklenz-backend:latest"
+        docker push "${docker_username}/TaskEye-backend:latest"
         if [ $? -ne 0 ]; then
             print_error "Backend latest image push failed!"
             return 1
@@ -956,13 +956,13 @@ build_images() {
         # Push frontend images
         print_info "Pushing frontend images..."
         if [ "$frontend_version" != "latest" ]; then
-            docker push "${docker_username}/worklenz-frontend:${frontend_version}"
+            docker push "${docker_username}/TaskEye-frontend:${frontend_version}"
             if [ $? -ne 0 ]; then
                 print_error "Frontend image push failed!"
                 return 1
             fi
         fi
-        docker push "${docker_username}/worklenz-frontend:latest"
+        docker push "${docker_username}/TaskEye-frontend:latest"
         if [ $? -ne 0 ]; then
             print_error "Frontend latest image push failed!"
             return 1
@@ -973,8 +973,8 @@ build_images() {
         print_success "Images are now available on Docker Hub!"
         echo ""
         echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo -e "  ${GREEN}Backend:${NC} https://hub.docker.com/r/${docker_username}/worklenz-backend"
-        echo -e "  ${GREEN}Frontend:${NC} https://hub.docker.com/r/${docker_username}/worklenz-frontend"
+        echo -e "  ${GREEN}Backend:${NC} https://hub.docker.com/r/${docker_username}/TaskEye-backend"
+        echo -e "  ${GREEN}Frontend:${NC} https://hub.docker.com/r/${docker_username}/TaskEye-frontend"
         if [ "$backend_version" != "latest" ]; then
             echo -e "  ${GREEN}Tags:${NC} ${backend_version}, latest (backend) | ${frontend_version}, latest (frontend)"
         fi
@@ -1049,13 +1049,13 @@ push_images() {
     echo ""
 
     # Check if images exist locally
-    if ! docker images | grep -q "${docker_username}/worklenz-backend"; then
+    if ! docker images | grep -q "${docker_username}/TaskEye-backend"; then
         print_error "Backend image not found locally!"
         print_info "Please build images first: ./manage.sh build"
         return 1
     fi
 
-    if ! docker images | grep -q "${docker_username}/worklenz-frontend"; then
+    if ! docker images | grep -q "${docker_username}/TaskEye-frontend"; then
         print_error "Frontend image not found locally!"
         print_info "Please build images first: ./manage.sh build"
         return 1
@@ -1079,24 +1079,24 @@ push_images() {
     print_info "Pushing backend images to Docker Hub..."
     if [ "$backend_version" != "latest" ]; then
         # Verify version-tagged image exists locally
-        if ! docker image inspect "${docker_username}/worklenz-backend:${backend_version}" >/dev/null 2>&1; then
-            print_error "Image ${docker_username}/worklenz-backend:${backend_version} not found locally. Please build it first."
+        if ! docker image inspect "${docker_username}/TaskEye-backend:${backend_version}" >/dev/null 2>&1; then
+            print_error "Image ${docker_username}/TaskEye-backend:${backend_version} not found locally. Please build it first."
             return 1
         fi
-        print_info "Pushing ${docker_username}/worklenz-backend:${backend_version}..."
-        docker push "${docker_username}/worklenz-backend:${backend_version}"
+        print_info "Pushing ${docker_username}/TaskEye-backend:${backend_version}..."
+        docker push "${docker_username}/TaskEye-backend:${backend_version}"
         if [ $? -ne 0 ]; then
             print_error "Backend version push failed!"
             return 1
         fi
     fi
     # Verify latest image exists locally
-    if ! docker image inspect "${docker_username}/worklenz-backend:latest" >/dev/null 2>&1; then
-        print_error "Image ${docker_username}/worklenz-backend:latest not found locally. Please build it first."
+    if ! docker image inspect "${docker_username}/TaskEye-backend:latest" >/dev/null 2>&1; then
+        print_error "Image ${docker_username}/TaskEye-backend:latest not found locally. Please build it first."
         return 1
     fi
-    print_info "Pushing ${docker_username}/worklenz-backend:latest..."
-    docker push "${docker_username}/worklenz-backend:latest"
+    print_info "Pushing ${docker_username}/TaskEye-backend:latest..."
+    docker push "${docker_username}/TaskEye-backend:latest"
     if [ $? -ne 0 ]; then
         print_error "Backend latest push failed!"
         return 1
@@ -1109,19 +1109,19 @@ push_images() {
     print_info "Pushing frontend images to Docker Hub..."
     if [ "$frontend_version" != "latest" ]; then
         # Verify version-tagged image exists locally
-        if ! docker image inspect "${docker_username}/worklenz-frontend:${frontend_version}" >/dev/null 2>&1; then
-            print_error "Image ${docker_username}/worklenz-frontend:${frontend_version} not found locally. Please build it first."
+        if ! docker image inspect "${docker_username}/TaskEye-frontend:${frontend_version}" >/dev/null 2>&1; then
+            print_error "Image ${docker_username}/TaskEye-frontend:${frontend_version} not found locally. Please build it first."
             return 1
         fi
-        print_info "Pushing ${docker_username}/worklenz-frontend:${frontend_version}..."
-        docker push "${docker_username}/worklenz-frontend:${frontend_version}"
+        print_info "Pushing ${docker_username}/TaskEye-frontend:${frontend_version}..."
+        docker push "${docker_username}/TaskEye-frontend:${frontend_version}"
         if [ $? -ne 0 ]; then
             print_error "Frontend version push failed!"
             return 1
         fi
     fi
-    print_info "Pushing ${docker_username}/worklenz-frontend:latest..."
-    docker push "${docker_username}/worklenz-frontend:latest"
+    print_info "Pushing ${docker_username}/TaskEye-frontend:latest..."
+    docker push "${docker_username}/TaskEye-frontend:latest"
     if [ $? -ne 0 ]; then
         print_error "Frontend latest push failed!"
         return 1
@@ -1130,8 +1130,8 @@ push_images() {
     print_success "Frontend images pushed successfully!"
     echo ""
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "  ${GREEN}Backend:${NC} https://hub.docker.com/r/${docker_username}/worklenz-backend"
-    echo -e "  ${GREEN}Frontend:${NC} https://hub.docker.com/r/${docker_username}/worklenz-frontend"
+    echo -e "  ${GREEN}Backend:${NC} https://hub.docker.com/r/${docker_username}/TaskEye-backend"
+    echo -e "  ${GREEN}Frontend:${NC} https://hub.docker.com/r/${docker_username}/TaskEye-frontend"
     if [ "$backend_version" != "latest" ]; then
         echo -e "  ${GREEN}Pushed Tags:${NC}"
         echo -e "    Backend: ${backend_version}, latest"
@@ -1155,9 +1155,9 @@ build_and_push_images() {
 # Installation Function
 # ============================================================================
 
-install_worklenz() {
+install_TaskEye() {
     print_header
-    echo -e "${BLUE}Installing Worklenz${NC}"
+    echo -e "${BLUE}Installing TaskEye${NC}"
     echo ""
 
     # Check prerequisites
@@ -1186,7 +1186,7 @@ install_worklenz() {
     echo ""
     echo "Enter your domain name:"
     echo "  - For local testing: enter 'localhost'"
-    echo "  - For production: enter your domain (e.g., worklenz.example.com)"
+    echo "  - For production: enter your domain (e.g., TaskEye.example.com)"
     echo ""
     read -p "Domain [localhost]: " domain
     domain=${domain:-localhost}
@@ -1261,15 +1261,15 @@ install_worklenz() {
             print_info "Building backend image (version: ${backend_version})..."
             if [ "$backend_version" == "latest" ]; then
                 docker build \
-                    -f "$SCRIPT_DIR/worklenz-backend/Dockerfile" \
-                    -t "${docker_username}/worklenz-backend:latest" \
-                    "$SCRIPT_DIR/worklenz-backend"
+                    -f "$SCRIPT_DIR/TaskEye-backend/Dockerfile" \
+                    -t "${docker_username}/TaskEye-backend:latest" \
+                    "$SCRIPT_DIR/TaskEye-backend"
             else
                 docker build \
-                    -f "$SCRIPT_DIR/worklenz-backend/Dockerfile" \
-                    -t "${docker_username}/worklenz-backend:${backend_version}" \
-                    -t "${docker_username}/worklenz-backend:latest" \
-                    "$SCRIPT_DIR/worklenz-backend"
+                    -f "$SCRIPT_DIR/TaskEye-backend/Dockerfile" \
+                    -t "${docker_username}/TaskEye-backend:${backend_version}" \
+                    -t "${docker_username}/TaskEye-backend:latest" \
+                    "$SCRIPT_DIR/TaskEye-backend"
             fi
 
             if [ $? -ne 0 ]; then
@@ -1284,15 +1284,15 @@ install_worklenz() {
             print_info "Building frontend image (version: ${frontend_version})..."
             if [ "$frontend_version" == "latest" ]; then
                 docker build \
-                    -f "$SCRIPT_DIR/worklenz-frontend/Dockerfile" \
-                    -t "${docker_username}/worklenz-frontend:latest" \
-                    "$SCRIPT_DIR/worklenz-frontend"
+                    -f "$SCRIPT_DIR/TaskEye-frontend/Dockerfile" \
+                    -t "${docker_username}/TaskEye-frontend:latest" \
+                    "$SCRIPT_DIR/TaskEye-frontend"
             else
                 docker build \
-                    -f "$SCRIPT_DIR/worklenz-frontend/Dockerfile" \
-                    -t "${docker_username}/worklenz-frontend:${frontend_version}" \
-                    -t "${docker_username}/worklenz-frontend:latest" \
-                    "$SCRIPT_DIR/worklenz-frontend"
+                    -f "$SCRIPT_DIR/TaskEye-frontend/Dockerfile" \
+                    -t "${docker_username}/TaskEye-frontend:${frontend_version}" \
+                    -t "${docker_username}/TaskEye-frontend:latest" \
+                    "$SCRIPT_DIR/TaskEye-frontend"
             fi
 
             if [ $? -ne 0 ]; then
@@ -1305,8 +1305,8 @@ install_worklenz() {
 
             # Update docker-compose.yaml
             print_info "Updating docker-compose.yaml..."
-            sed -i.bak "s|image: .*/worklenz-backend:\${BACKEND_VERSION:-.*}|image: ${docker_username}/worklenz-backend:\${BACKEND_VERSION:-${backend_version}}|" "$DOCKER_COMPOSE_FILE"
-            sed -i.bak "s|image: .*/worklenz-frontend:\${FRONTEND_VERSION:-.*}|image: ${docker_username}/worklenz-frontend:\${FRONTEND_VERSION:-${frontend_version}}|" "$DOCKER_COMPOSE_FILE"
+            sed -i.bak "s|image: .*/TaskEye-backend:\${BACKEND_VERSION:-.*}|image: ${docker_username}/TaskEye-backend:\${BACKEND_VERSION:-${backend_version}}|" "$DOCKER_COMPOSE_FILE"
+            sed -i.bak "s|image: .*/TaskEye-frontend:\${FRONTEND_VERSION:-.*}|image: ${docker_username}/TaskEye-frontend:\${FRONTEND_VERSION:-${frontend_version}}|" "$DOCKER_COMPOSE_FILE"
             rm -f "$DOCKER_COMPOSE_FILE.bak"
 
             print_success "Custom images ready!"
@@ -1321,14 +1321,14 @@ install_worklenz() {
                 if [ $? -eq 0 ]; then
                     if [ "$backend_version" != "latest" ]; then
                         print_info "Pushing backend image (${backend_version})..."
-                        docker push "${docker_username}/worklenz-backend:${backend_version}"
+                        docker push "${docker_username}/TaskEye-backend:${backend_version}"
                         if [ $? -ne 0 ]; then
                             print_error "Failed to push backend image (${backend_version})"
                             return 1
                         fi
                     fi
                     print_info "Pushing backend image (latest)..."
-                    docker push "${docker_username}/worklenz-backend:latest"
+                    docker push "${docker_username}/TaskEye-backend:latest"
                     if [ $? -ne 0 ]; then
                         print_error "Failed to push backend image (latest)"
                         return 1
@@ -1336,14 +1336,14 @@ install_worklenz() {
 
                     if [ "$frontend_version" != "latest" ]; then
                         print_info "Pushing frontend image (${frontend_version})..."
-                        docker push "${docker_username}/worklenz-frontend:${frontend_version}"
+                        docker push "${docker_username}/TaskEye-frontend:${frontend_version}"
                         if [ $? -ne 0 ]; then
                             print_error "Failed to push frontend image (${frontend_version})"
                             return 1
                         fi
                     fi
                     print_info "Pushing frontend image (latest)..."
-                    docker push "${docker_username}/worklenz-frontend:latest"
+                    docker push "${docker_username}/TaskEye-frontend:latest"
                     if [ $? -ne 0 ]; then
                         print_error "Failed to push frontend image (latest)"
                         return 1
@@ -1390,7 +1390,7 @@ install_worklenz() {
     print_success "Installation completed!"
     echo ""
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    echo -e "  ${GREEN}Access Worklenz at:${NC} ${VITE_API_URL:-https://localhost}"
+    echo -e "  ${GREEN}Access TaskEye at:${NC} ${VITE_API_URL:-https://localhost}"
     echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 }
 
@@ -1398,9 +1398,9 @@ install_worklenz() {
 # Upgrade Function
 # ============================================================================
 
-upgrade_worklenz() {
+upgrade_TaskEye() {
     print_header
-    echo -e "${BLUE}Upgrade Worklenz${NC}"
+    echo -e "${BLUE}Upgrade TaskEye${NC}"
     echo ""
 
     print_warning "This will pull latest images and rebuild containers"
@@ -1483,7 +1483,7 @@ manage_ssl() {
             load_env
             if [ ! -z "${DOMAIN}" ] && [ -d "/etc/letsencrypt/live/${DOMAIN}" ]; then
                 print_info "Let's Encrypt certificate info:"
-                docker run --rm -v worklenz_certbot_certs:/etc/letsencrypt alpine/openssl x509 -in "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" -text -noout | grep -E "(Subject:|Issuer:|Not Before|Not After)"
+                docker run --rm -v TaskEye_certbot_certs:/etc/letsencrypt alpine/openssl x509 -in "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" -text -noout | grep -E "(Subject:|Issuer:|Not Before|Not After)"
             fi
             read -p "Press Enter to continue..."
             ;;
@@ -1505,7 +1505,7 @@ show_menu() {
     print_header
     echo -e "${YELLOW}Main Menu${NC}"
     echo ""
-    echo " 1. Install Worklenz"
+    echo " 1. Install TaskEye"
     echo " 2. Start Services"
     echo " 3. Stop Services"
     echo " 4. Restart Services"
@@ -1513,7 +1513,7 @@ show_menu() {
     echo " 6. View Logs"
     echo " 7. Backup Data"
     echo " 8. Restore Data"
-    echo " 9. Upgrade Worklenz"
+    echo " 9. Upgrade TaskEye"
     echo "10. Configure Environment"
     echo "11. Manage SSL/TLS"
     echo "12. Build Images"
@@ -1530,7 +1530,7 @@ main() {
 
         case $choice in
             1)
-                install_worklenz
+                install_TaskEye
                 read -p "Press Enter to continue..."
                 ;;
             2)
@@ -1561,7 +1561,7 @@ main() {
                 read -p "Press Enter to continue..."
                 ;;
             9)
-                upgrade_worklenz
+                upgrade_TaskEye
                 read -p "Press Enter to continue..."
                 ;;
             10)
@@ -1599,7 +1599,7 @@ main() {
 if [ $# -gt 0 ]; then
     case "$1" in
         install)
-            install_worklenz
+            install_TaskEye
             ;;
         start)
             start_services
@@ -1623,7 +1623,7 @@ if [ $# -gt 0 ]; then
             restore_data
             ;;
         upgrade)
-            upgrade_worklenz
+            upgrade_TaskEye
             ;;
         configure|config)
             configure_env
@@ -1644,12 +1644,12 @@ if [ $# -gt 0 ]; then
             build_and_push_images
             ;;
         help|--help|-h)
-            echo "Worklenz Management Script"
+            echo "TaskEye Management Script"
             echo ""
             echo "Usage: $0 [command]"
             echo ""
             echo "Commands:"
-            echo "  install          Install Worklenz (auto-generates secrets)"
+            echo "  install          Install TaskEye (auto-generates secrets)"
             echo "  start            Start all services"
             echo "  stop             Stop all services"
             echo "  restart          Restart all services"

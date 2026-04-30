@@ -8,8 +8,8 @@ for i in 1 2 3 4 5; do
   echo "Attempt $i to connect to MinIO..."
   if /usr/bin/mc alias set myminio http://minio:9000 minioadmin minioadmin; then
     echo "Successfully connected to MinIO!"
-    /usr/bin/mc mb --ignore-existing myminio/worklenz-bucket
-    /usr/bin/mc policy set public myminio/worklenz-bucket
+    /usr/bin/mc mb --ignore-existing myminio/TaskEye-bucket
+    /usr/bin/mc policy set public myminio/TaskEye-bucket
     exit 0
   fi
 
