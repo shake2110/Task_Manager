@@ -104,7 +104,7 @@ const RecentAndFavouriteProjectList = () => {
 
   // Card header components
   const cardTitle = (
-    <Typography.Title level={5} style={{ marginBlockEnd: 0 }}>
+    <Typography.Title level={5} style={{ marginBlockEnd: 0, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>
       {t('projects.title')} ({projectsData?.body?.length})
     </Typography.Title>
   );
@@ -113,7 +113,7 @@ const RecentAndFavouriteProjectList = () => {
     <Flex gap={8} align="center">
       <Tooltip title={t('projects.refreshProjects')}>
         <Button
-          shape="circle"
+          className="bauhaus-btn-yellow"
           icon={<SyncOutlined spin={projectsIsFetching} />}
           onClick={refetch}
         />
@@ -125,12 +125,13 @@ const RecentAndFavouriteProjectList = () => {
         ]}
         defaultValue={getActiveProjectsFilter() === 0 ? 'Recent' : 'Favourites'}
         onChange={handleSegmentChange}
+        className="bauhaus-segmented"
       />
     </Flex>
   );
 
   return (
-    <Card title={cardTitle} extra={cardExtra} style={{ width: '100%' }}>
+    <Card className="bauhaus-card" title={cardTitle} extra={cardExtra}>
       <div style={{ maxHeight: 420, overflow: 'auto' }}>
         {projectsData?.body?.length === 0 ? (
           <Empty

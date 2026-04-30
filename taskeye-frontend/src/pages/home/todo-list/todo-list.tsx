@@ -99,7 +99,7 @@ const TodoList = () => {
   ];
 
   return (
-    <Card style={{ width: '100%' }} bodyStyle={{ padding: 0 }}>
+    <Card className="bauhaus-card" bodyStyle={{ padding: 0 }}>
       <style>{`
         .todo-collapse .ant-collapse-header {
           display: flex !important;
@@ -128,12 +128,12 @@ const TodoList = () => {
             key: '1',
             label: (
               <Flex style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                <Typography.Title level={5} style={{ margin: 0 }}>
+                <Typography.Title level={5} style={{ margin: 0, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>
                   {t('home:todoList.title')} ({data?.body.length})
                 </Typography.Title>
                 <Tooltip title={t('home:todoList.refreshTasks')}>
                   <Button 
-                    shape="circle" 
+                    className="bauhaus-btn-yellow"
                     icon={<SyncOutlined spin={isFetching} />} 
                     onClick={(e) => {
                       e.stopPropagation();
@@ -150,6 +150,7 @@ const TodoList = () => {
                     <Flex vertical>
                       <Input
                         ref={todoInputRef}
+                        className="border-2 border-black rounded-none h-10 font-bold"
                         placeholder={t('home:todoList.addTask')}
                         onChange={e => {
                           const inputValue = e.currentTarget.value;
@@ -169,8 +170,11 @@ const TodoList = () => {
                           type="info"
                           style={{
                             width: 'fit-content',
-                            borderRadius: 2,
+                            borderRadius: 0,
+                            border: '2px solid black',
+                            backgroundColor: 'var(--bauhaus-yellow)',
                             padding: '0 6px',
+                            marginTop: '8px'
                           }}
                         />
                       )}

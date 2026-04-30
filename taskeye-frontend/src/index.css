@@ -1,10 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&display=swap");
 @import url("./styles/customOverrides.css");
 @import url("./styles/task-management.css");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bauhaus-red: #D02020;
+  --bauhaus-blue: #1040C0;
+  --bauhaus-yellow: #F0C020;
+  --bauhaus-black: #121212;
+  --bauhaus-white: #F0F0F0;
+  --bauhaus-border: 4px;
+}
 
 .app-loading-container {
   transition: none !important;
@@ -25,18 +34,14 @@ body {
   transition: background-color 0.3s ease;
   margin: 0;
   padding: 0;
+  background-color: var(--bauhaus-white) !important;
+  color: var(--bauhaus-black) !important;
 }
 
 html.dark,
 html.dark body {
-  background-color: #181818;
-  color: #ffffff;
-}
-
-html.light,
-html.light body {
-  background-color: #fafafa;
-  color: #181818;
+  background-color: var(--bauhaus-black) !important;
+  color: var(--bauhaus-white) !important;
 }
 
 /* Prevent content flash */
@@ -51,7 +56,7 @@ html.light body {
   }
 }
 
-/* antdesign override imports  */
+/* Bauhaus Typography & Global Geometric Styles */
 
 *,
 *::before,
@@ -59,19 +64,77 @@ html.light body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Inter", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-family: "Outfit", sans-serif !important;
 }
 
-/* helper classes  */
-.borderless-icon-btn {
-  border: none;
+/* Bauhaus Utility Classes */
+
+.bauhaus-card {
+  background-color: white !important;
+  border: 4px solid var(--bauhaus-black) !important;
+  box-shadow: 8px 8px 0px 0px var(--bauhaus-black) !important;
+  border-radius: 0px !important;
+  transition: transform 0.2s ease-out !important;
 }
 
-.blue-link {
-  color: #1890ff;
-  /* This is Ant Design's default link color */
+.bauhaus-card:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 10px 10px 0px 0px var(--bauhaus-black) !important;
+}
+
+.bauhaus-btn-red {
+  background-color: var(--bauhaus-red) !important;
+  color: white !important;
+  border: 2px solid var(--bauhaus-black) !important;
+  box-shadow: 4px 4px 0px 0px var(--bauhaus-black) !important;
+  border-radius: 0px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+}
+
+.bauhaus-btn-red:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 0px 0px 0px 0px var(--bauhaus-black) !important;
+}
+
+.bauhaus-btn-blue {
+  background-color: var(--bauhaus-blue) !important;
+  color: white !important;
+  border: 2px solid var(--bauhaus-black) !important;
+  box-shadow: 4px 4px 0px 0px var(--bauhaus-black) !important;
+  border-radius: 0px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+}
+
+.bauhaus-btn-blue:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 0px 0px 0px 0px var(--bauhaus-black) !important;
+}
+
+.bauhaus-btn-yellow {
+  background-color: var(--bauhaus-yellow) !important;
+  color: var(--bauhaus-black) !important;
+  border: 2px solid var(--bauhaus-black) !important;
+  box-shadow: 4px 4px 0px 0px var(--bauhaus-black) !important;
+  border-radius: 0px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+}
+
+.bauhaus-btn-yellow:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 0px 0px 0px 0px var(--bauhaus-black) !important;
+}
+
+.bauhaus-heading {
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -2px !important;
+  line-height: 0.9 !important;
 }
 
 .ps__rail-y {

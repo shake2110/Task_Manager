@@ -172,27 +172,28 @@ const UserActivityFeed: React.FC = () => {
 
   return (
     <Card 
+      className="bauhaus-card"
       title={
-        <Typography.Title level={5} style={{ marginBlockEnd: 0 }}>
+        <Typography.Title level={5} style={{ marginBlockEnd: 0, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>
           {t('tasks.recentActivity')} ({currentCount})
         </Typography.Title>
       }
       extra={
         <Tooltip title={t('tasks.refresh')}>
           <Button 
-            shape="circle" 
+            className="bauhaus-btn-yellow"
             icon={<SyncOutlined spin={isLoading} />} 
             onClick={handleRefresh}
           />
         </Tooltip>
       }
-      style={{ width: '100%' }}
     >
       <Segmented
         options={segmentOptions}
         value={activeTab}
         onChange={handleTabChange}
         style={{ marginBottom: 16, width: '100%' }}
+        className="bauhaus-segmented"
         block
       />
       {renderContent()}

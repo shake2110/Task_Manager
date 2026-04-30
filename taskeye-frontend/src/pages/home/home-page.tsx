@@ -103,29 +103,36 @@ const HomePage = memo(() => {
   }, [isDesktop, isOwnerOrAdmin]);
 
   return (
-    <div className="my-8 min-h-[90vh]">
-      <Col className="flex flex-col gap-6">
-        <GreetingWithTime />
-        {CreateProjectButtonComponent}
-      </Col>
+    <div className="my-8 min-h-[90vh] relative overflow-hidden">
+      {/* Bauhaus Decorative Shapes */}
+      <div className="absolute -top-20 -right-20 w-80 h-80 bg-[#D02020] rounded-full opacity-10 pointer-events-none z-0" />
+      <div className="absolute top-1/2 -left-20 w-60 h-60 bg-[#1040C0] rotate-12 opacity-10 pointer-events-none z-0" />
+      <div className="absolute -bottom-20 right-1/4 w-0 h-0 border-l-[100px] border-l-transparent border-r-[100px] border-r-transparent border-b-[200px] border-b-[#F0C020] opacity-10 pointer-events-none z-0" />
 
-      <Row gutter={[24, 24]} className="mt-12">
-        <Col xs={24} lg={16}>
-          <Flex vertical gap={24}>
-            <TasksList />
-          </Flex>
+      <div className="relative z-10">
+        <Col className="flex flex-col gap-6">
+          <GreetingWithTime />
+          {CreateProjectButtonComponent}
         </Col>
 
-        <Col xs={24} lg={8}>
-          <Flex vertical gap={24}>
-            <TodoList />
-            
-            <UserActivityFeed />
+        <Row gutter={[24, 24]} className="mt-12">
+          <Col xs={24} lg={16}>
+            <Flex vertical gap={24}>
+              <TasksList />
+            </Flex>
+          </Col>
 
-            <RecentAndFavouriteProjectList />
-          </Flex>
-        </Col>
-      </Row>
+          <Col xs={24} lg={8}>
+            <Flex vertical gap={24}>
+              <TodoList />
+              
+              <UserActivityFeed />
+
+              <RecentAndFavouriteProjectList />
+            </Flex>
+          </Col>
+        </Row>
+      </div>
 
       {createPortal(<TaskDrawer />, document.body, 'home-task-drawer')}
       {createPortal(<ProjectDrawer onClose={() => {}} />, document.body, 'project-drawer')}

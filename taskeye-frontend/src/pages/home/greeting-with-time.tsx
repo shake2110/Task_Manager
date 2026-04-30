@@ -13,17 +13,16 @@ const GreetingWithTime = () => {
   const greet = greetingString(firstName);
 
   return (
-    <Flex vertical gap={8} align="center">
-      <Typography.Title level={3} style={{ fontWeight: 500, marginBlock: 0 }}>
+    <div className="flex flex-col items-center gap-2 mb-8">
+      <h1 className="bauhaus-heading text-4xl sm:text-6xl text-center m-0">
         {greet}
-      </Typography.Title>
-      <Typography.Title
-        level={4}
-        style={{ fontSize: 16, fontWeight: 400, marginBlock: 0, color: colors.skyBlue }}
-      >
-        {currentDateString()}
-      </Typography.Title>
-    </Flex>
+      </h1>
+      <div className="bg-[#1040C0] px-4 py-1 border-2 border-black shadow-[4px_4px_0px_0px_black] rotate-[-1deg]">
+        <p className="text-white font-bold uppercase tracking-widest text-sm m-0">
+          {currentDateString()}
+        </p>
+      </div>
+    </div>
   );
 };
 

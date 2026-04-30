@@ -215,10 +215,10 @@ const TasksList: React.FC = React.memo(() => {
 
   return (
     <Card
-      className="task-list-card"
+      className="bauhaus-card"
       title={
         <Flex gap={8} align="center" className="task-list-mobile-header">
-          <Typography.Title level={5} style={{ margin: 0 }}>
+          <Typography.Title level={5} style={{ margin: 0, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>
             {t('tasks.tasks')}
           </Typography.Title>
           <Select
@@ -235,7 +235,7 @@ const TasksList: React.FC = React.memo(() => {
         <Flex gap={8} align="center" className="task-list-mobile-controls">
           <Tooltip title={t('tasks.refresh')} trigger={'hover'}>
             <Button
-              shape="circle"
+              className="bauhaus-btn-yellow"
               icon={<SyncOutlined spin={homeTasksFetching} />}
               onClick={refetch}
             />
@@ -247,18 +247,10 @@ const TasksList: React.FC = React.memo(() => {
             ]}
             defaultValue="List"
             onChange={handleSegmentChange}
-            className="task-list-mobile-segmented"
+            className="bauhaus-segmented"
           />
         </Flex>
       }
-      style={{
-        width: '100%',
-        border: '1px solid transparent',
-        boxShadow:
-          themeMode === 'dark'
-            ? 'rgba(0, 0, 0, 0.4) 0px 4px 12px, rgba(255, 255, 255, 0.06) 0px 2px 4px'
-            : '#7a7a7a26 0 5px 16px',
-      }}
     >
       {/* toggle task view list / calendar */}
       {viewOptions === 'List' ? (

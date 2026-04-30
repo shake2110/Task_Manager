@@ -15,12 +15,8 @@ const InviteButton = () => {
   return (
     <Tooltip title={t('inviteTooltip')}>
       <Button
-        type="dashed"
+        className="bauhaus-btn-blue"
         icon={<UsergroupAddOutlined />}
-        style={{
-          color: colors.skyBlue,
-          borderColor: colors.skyBlue,
-        }}
         onClick={() => dispatch(toggleInviteMemberDrawer())}
       >
         {t('invite')}
