@@ -1,5 +1,6 @@
 import { Flex, Typography } from '@/shared/antd-imports';
-import logo from '@/assets/images/taskeye-logo.png';
+import lightLogo from '@/assets/images/taskeye-light-mode.png';
+import darkLogo from '@/assets/images/taskeye-dark-mode.png';
 import { useAppSelector } from '@/hooks/useAppSelector';
 
 type AuthPageHeaderProp = {
@@ -9,6 +10,7 @@ type AuthPageHeaderProp = {
 // this page header used in only in auth pages
 const AuthPageHeader = ({ description }: AuthPageHeaderProp) => {
   const themeMode = useAppSelector(state => state.themeReducer.mode);
+  const logo = themeMode === 'dark' ? darkLogo : lightLogo;
   return (
     <Flex vertical align="center" gap={8} style={{ marginBottom: 24 }}>
       <img
