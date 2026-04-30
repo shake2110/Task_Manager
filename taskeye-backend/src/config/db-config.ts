@@ -4,7 +4,7 @@ const config: any = {
 };
 
 if (process.env.DATABASE_URL) {
-  config.connectionString = process.env.DATABASE_URL.trim();
+  config.connectionString = process.env.DATABASE_URL.replace(/^["'](.+)["']$/, "$1").trim();
 } else {
   config.user = process.env.DB_USER;
   config.password = process.env.DB_PASSWORD;
