@@ -84,3 +84,7 @@ backups/
 *.bak
 *.tmp
 nginx/conf.d/*.bak
+
+# AI Generated / Planning files
+*.resolved
+action_plan.md*

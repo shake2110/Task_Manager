@@ -4,7 +4,7 @@ import {sendEmail} from "./email";
 import {sanitize} from "./utils";
 import FileConstants from "./file-constants";
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "worklenz.com";
+const FRONTEND_URL = process.env.FRONTEND_URL || "taskeye.io";
 
 export function sendWelcomeEmail(email: string, name: string) {
   let content = FileConstants.getEmailTemplate(IEmailTemplateType.Welcome) as string;
@@ -15,7 +15,7 @@ export function sendWelcomeEmail(email: string, name: string) {
 
   sendEmail({
     to: [email],
-    subject: "Welcome to Worklenz.",
+    subject: "Welcome to TaskEye.",
     html: content
   });
 }
@@ -27,7 +27,7 @@ export function sendNewSubscriberNotification(subscriberEmail: string) {
   content = content.replace("[VAR_EMAIL]", sanitize(subscriberEmail));
 
   sendEmail({
-    subject: "Worklenz - New Subscriber.",
+    subject: "TaskEye - New Subscriber.",
     html: content
   });
 }
@@ -45,7 +45,7 @@ export function sendJoinTeamInvitation(myName: string, teamName: string, teamId:
 
   sendEmail({
     to: [toEmail],
-    subject: `${myName} has invited you to work with ${teamName} in Worklenz`,
+    subject: `${myName} has invited you to work with ${teamName} in TaskEye`,
     html: content
   });
 }
@@ -64,7 +64,7 @@ export function sendRegisterAndJoinTeamInvitation(myName: string, userName: stri
 
   sendEmail({
     to: [toEmail],
-    subject: `${myName} has invited you to work with ${teamName} in Worklenz`,
+    subject: `${myName} has invited you to work with ${teamName} in TaskEye`,
     html: content
   });
 }
@@ -79,7 +79,7 @@ export function sendResetEmail(toEmail: string, user_id: string, hash: string) {
 
   sendEmail({
     to: [toEmail],
-    subject: "Reset your password on Worklenz.",
+    subject: "Reset your password on TaskEye.",
     html: content
   });
 }

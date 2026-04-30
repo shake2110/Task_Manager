@@ -1,6 +1,5 @@
 import { Flex, Typography } from '@/shared/antd-imports';
-import logo from '@/assets/images/worklenz-light-mode.png';
-import logoDark from '@/assets/images/worklenz-dark-mode.png';
+import logo from '@/assets/images/taskeye-logo.png';
 import { useAppSelector } from '@/hooks/useAppSelector';
 
 type AuthPageHeaderProp = {
@@ -13,9 +12,9 @@ const AuthPageHeader = ({ description }: AuthPageHeaderProp) => {
   return (
     <Flex vertical align="center" gap={8} style={{ marginBottom: 24 }}>
       <img
-        src={themeMode === 'dark' ? logoDark : logo}
-        alt="worklenz logo"
-        style={{ width: '100%', maxWidth: 220 }}
+        src={logo}
+        alt="TaskEye logo"
+        style={{ width: '100%', maxWidth: 220, height: 'auto', objectFit: 'contain' }}
       />
       <Typography.Text style={{ color: '#8c8c8c', maxWidth: 400, textAlign: 'center' }}>
         {description}

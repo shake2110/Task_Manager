@@ -107,10 +107,17 @@ const Navbar = () => {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        paddingInline: isDesktop ? 48 : 24,
+        paddingInline: isDesktop ? 32 : 16,
+        paddingBlock: 8,
         gap: 12,
         alignItems: 'center',
         justifyContent: 'space-between',
+        background: 'rgba(255, 255, 255, 0.02)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
       }}
     >
       <Flex
