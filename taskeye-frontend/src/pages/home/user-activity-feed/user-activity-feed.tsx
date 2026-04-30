@@ -172,16 +172,16 @@ const UserActivityFeed: React.FC = () => {
 
   return (
     <Card 
-      className="bauhaus-card"
+      className="flat-card"
       title={
-        <Typography.Title level={5} style={{ marginBlockEnd: 0, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>
+        <Typography.Title level={5} style={{ marginBlockEnd: 0, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--flat-fg)' }}>
           {t('tasks.recentActivity')} ({currentCount || 0})
         </Typography.Title>
       }
       extra={
         <Tooltip title={t('tasks.refresh')}>
           <Button 
-            className="bauhaus-btn-yellow"
+            className="flat-btn-secondary"
             icon={<SyncOutlined spin={isLoading} />} 
             onClick={handleRefresh}
           />
@@ -193,7 +193,6 @@ const UserActivityFeed: React.FC = () => {
         value={activeTab}
         onChange={handleTabChange}
         style={{ marginBottom: 16, width: '100%' }}
-        className="bauhaus-segmented"
         block
       />
       {renderContent()}

@@ -129,7 +129,7 @@ const CreateProjectButton: React.FC<CreateProjectButtonProps> = ({ className }) 
   return (
     <div className={className}>
       <Dropdown.Button
-        className="bauhaus-btn-red"
+        className="flat-btn-primary h-12"
         trigger={['click']}
         icon={<DownOutlined />}
         onClick={handleCreateProject}
@@ -144,11 +144,11 @@ const CreateProjectButton: React.FC<CreateProjectButtonProps> = ({ className }) 
         onClose={handleTemplateDrawerClose}
         open={isTemplateDrawerOpen}
         footer={
-          <div className="flex justify-end gap-3 px-4 py-4 border-t-4 border-black">
-            <Button className="bauhaus-btn-yellow" onClick={handleTemplateDrawerClose}>
+          <div className="flex justify-end gap-3 px-4 py-4 bg-white">
+            <Button className="flat-btn-secondary h-12" onClick={handleTemplateDrawerClose}>
               {t('cancel')}
             </Button>
-            <Button className="bauhaus-btn-blue" loading={projectImporting} onClick={setCreatedProjectTemplate}>
+            <Button className="flat-btn-primary h-12" loading={projectImporting} onClick={setCreatedProjectTemplate}>
               {t('create')}
             </Button>
           </div>

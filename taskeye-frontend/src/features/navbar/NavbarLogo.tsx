@@ -12,21 +12,16 @@ const NavbarLogo = () => {
     <Link to={'/taskeye/home'} style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
       <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          {/* Bauhaus Geometric Composition */}
-          <rect width="40" height="40" fill="transparent" />
-          {/* The Square Foundation */}
-          <rect x="2" y="2" width="36" height="36" stroke="#121212" strokeWidth="3" fill="#F0C020" />
-          {/* The Circular Eye */}
-          <circle cx="20" cy="20" r="12" stroke="#121212" strokeWidth="3" fill="#D02020" />
-          {/* The Focus Triangle */}
-          <path d="M20 12L28 28H12L20 12Z" fill="#1040C0" stroke="#121212" strokeWidth="2" />
+          {/* Flat Geometric Eye */}
+          <circle cx="20" cy="20" r="18" fill="var(--flat-primary)" />
+          <path d="M20 12L28 28H12L20 12Z" fill="white" />
         </svg>
         <span style={{ 
-          fontSize: '24px', 
-          fontWeight: 900, 
-          color: 'var(--bauhaus-black)', 
-          textTransform: 'uppercase',
-          letterSpacing: '-1px',
+          fontSize: '22px', 
+          fontWeight: 800, 
+          color: 'var(--flat-fg)', 
+          textTransform: 'none',
+          letterSpacing: '-0.03em',
           marginLeft: '8px',
           lineHeight: 1
         }}>

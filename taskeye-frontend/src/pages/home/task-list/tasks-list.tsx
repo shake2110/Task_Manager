@@ -136,15 +136,10 @@ const TasksList: React.FC = React.memo(() => {
             <div className="row-action-button">
               <Tooltip title={'Click open task form'}>
                 <Button
-                  type="text"
+                  className="flat-btn-secondary h-8 px-3"
                   icon={<ExpandAltOutlined />}
                   onClick={() => {
                     handleSelectTask(record);
-                  }}
-                  style={{
-                    backgroundColor: colors.transparent,
-                    padding: 0,
-                    height: 'fit-content',
                   }}
                 >
                   Open
@@ -215,10 +210,10 @@ const TasksList: React.FC = React.memo(() => {
 
   return (
     <Card
-      className="bauhaus-card"
+      className="flat-card"
       title={
         <Flex gap={8} align="center" className="task-list-mobile-header">
-          <Typography.Title level={5} style={{ margin: 0, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>
+          <Typography.Title level={5} style={{ margin: 0, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--flat-fg)' }}>
             {t('tasks.tasks')}
           </Typography.Title>
           <Select
@@ -235,7 +230,7 @@ const TasksList: React.FC = React.memo(() => {
         <Flex gap={8} align="center" className="task-list-mobile-controls">
           <Tooltip title={t('tasks.refresh')} trigger={'hover'}>
             <Button
-              className="bauhaus-btn-yellow"
+              className="flat-btn-secondary"
               icon={<SyncOutlined spin={homeTasksFetching} />}
               onClick={refetch}
             />
@@ -247,7 +242,6 @@ const TasksList: React.FC = React.memo(() => {
             ]}
             defaultValue="List"
             onChange={handleSegmentChange}
-            className="bauhaus-segmented"
           />
         </Flex>
       }

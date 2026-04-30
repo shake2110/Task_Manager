@@ -86,7 +86,7 @@ const Navbar = () => {
         .map((route, index) => ({
           key: route.path.split('/').pop() || index,
           label: (
-            <Link to={route.path} style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>
+            <Link to={route.path} style={{ fontWeight: 800, textTransform: 'none', letterSpacing: '-0.03em', color: 'var(--flat-fg)' }}>
               {t(route.name)}
             </Link>
           ),
@@ -108,12 +108,12 @@ const Navbar = () => {
         display: 'flex',
         flexDirection: 'column',
         paddingInline: isDesktop ? 32 : 16,
-        paddingBlock: 12,
+        paddingBlock: 16,
         gap: 12,
         alignItems: 'center',
         justifyContent: 'space-between',
-        background: 'var(--bauhaus-white)',
-        borderBottom: '4px solid var(--bauhaus-black)',
+        background: 'var(--flat-bg)',
+        borderBottom: 'none',
         position: 'sticky',
         top: 0,
         zIndex: 1000,

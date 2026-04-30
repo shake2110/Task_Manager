@@ -45,6 +45,7 @@ const TodoList = () => {
       done: false,
       is_task: false,
       color_code: '#000',
+      manual_progress: 0, // FIXED: Added required property
     };
 
     const res = await createPersonalTask(newTodo);
@@ -74,12 +75,16 @@ const TodoList = () => {
           <Tooltip title={t('home:todoList.markAsDone')}>
             <Button
               type="text"
-              className="borderless-icon-btn"
-              style={{ backgroundColor: colors.transparent }}
+              className="border-none flex items-center justify-center"
+              style={{ backgroundColor: 'transparent' }}
               shape="circle"
               icon={
                 <CheckCircleOutlined
-                  style={{ color: record.done ? colors.limeGreen : colors.lightGray }}
+                  style={{ 
+                    fontSize: '20px',
+                    color: record.done ? 'var(--flat-secondary)' : '#D1D5DB', // High contrast Emerald vs Gray 300
+                    transition: 'color 0.2s ease'
+                  }}
                 />
               }
               onClick={() => handleCompleteTodo(record.id)}
@@ -99,7 +104,7 @@ const TodoList = () => {
   ];
 
   return (
-    <Card className="bauhaus-card" bodyStyle={{ padding: 0 }}>
+    <Card className="flat-card" bodyStyle={{ padding: 0 }}>
       <style>{`
         .todo-collapse .ant-collapse-header {
           display: flex !important;
@@ -128,12 +133,12 @@ const TodoList = () => {
             key: '1',
             label: (
               <Flex style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                <Typography.Title level={5} style={{ margin: 0, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>
+                <Typography.Title level={5} style={{ margin: 0, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--flat-fg)' }}>
                   {t('home:todoList.title')} ({data?.body?.length || 0})
                 </Typography.Title>
                 <Tooltip title={t('home:todoList.refreshTasks')}>
                   <Button 
-                    className="bauhaus-btn-yellow"
+                    className="flat-btn-secondary"
                     icon={<SyncOutlined spin={isFetching} />} 
                     onClick={(e) => {
                       e.stopPropagation();
@@ -150,7 +155,7 @@ const TodoList = () => {
                     <Flex vertical>
                       <Input
                         ref={todoInputRef}
-                        className="border-2 border-black rounded-none h-10 font-bold"
+                        className="bg-gray-100 border-none rounded-md h-12 focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all"
                         placeholder={t('home:todoList.addTask')}
                         onChange={e => {
                           const inputValue = e.currentTarget.value;
@@ -162,7 +167,7 @@ const TodoList = () => {
                       {isAlertShowing && (
                         <Alert
                           message={
-                            <Typography.Text style={{ fontSize: 11 }}>
+                            <Typography.Text style={{ fontSize: 11, fontWeight: 600 }}>
                               {t('home:todoList.pressEnter')} <strong>Enter</strong>{' '}
                               {t('home:todoList.toCreate')}
                             </Typography.Text>
@@ -170,10 +175,10 @@ const TodoList = () => {
                           type="info"
                           style={{
                             width: 'fit-content',
-                            borderRadius: 0,
-                            border: '2px solid black',
-                            backgroundColor: 'var(--bauhaus-yellow)',
-                            padding: '0 6px',
+                            borderRadius: '6px',
+                            border: 'none',
+                            backgroundColor: 'var(--flat-muted)',
+                            padding: '4px 12px',
                             marginTop: '8px'
                           }}
                         />

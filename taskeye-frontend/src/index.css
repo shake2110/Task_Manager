@@ -7,134 +7,100 @@
 @tailwind utilities;
 
 :root {
-  --bauhaus-red: #D02020;
-  --bauhaus-blue: #1040C0;
-  --bauhaus-yellow: #F0C020;
-  --bauhaus-black: #121212;
-  --bauhaus-white: #F0F0F0;
-  --bauhaus-border: 4px;
+  --flat-bg: #FFFFFF;
+  --flat-fg: #111827;
+  --flat-primary: #3B82F6;
+  --flat-secondary: #10B981;
+  --flat-accent: #F59E0B;
+  --flat-muted: #F3F4F6;
+  --flat-border: #E5E7EB;
 }
 
-.app-loading-container {
-  transition: none !important;
-}
-
-.app-loading-container * {
-  transition: none !important;
-}
-
-/* Ensure loading spinner has proper contrast */
-.app-loading-container .ant-spin {
-  transition: none !important;
-}
-
-/* Prevent background flash during load */
+/* Base Styles */
 html,
 body {
-  transition: background-color 0.3s ease;
-  margin: 0;
-  padding: 0;
-  background-color: var(--bauhaus-white) !important;
-  color: var(--bauhaus-black) !important;
-}
-
-html.dark,
-html.dark body {
-  background-color: var(--bauhaus-black) !important;
-  color: var(--bauhaus-white) !important;
-}
-
-/* Prevent content flash */
-#root {
-  opacity: 0;
-  animation: fadeIn 0.3s ease forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-/* Bauhaus Typography & Global Geometric Styles */
-
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  background-color: var(--flat-muted) !important;
+  color: var(--flat-fg) !important;
   font-family: "Outfit", sans-serif !important;
 }
 
-/* Bauhaus Utility Classes */
+/* Flat Utility Classes */
 
-.bauhaus-card {
+.flat-card {
   background-color: white !important;
-  border: 4px solid var(--bauhaus-black) !important;
-  box-shadow: 8px 8px 0px 0px var(--bauhaus-black) !important;
-  border-radius: 0px !important;
-  transition: transform 0.2s ease-out !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 12px !important;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }
 
-.bauhaus-card:hover {
-  transform: translate(-2px, -2px) !important;
-  box-shadow: 10px 10px 0px 0px var(--bauhaus-black) !important;
+.flat-card:hover {
+  transform: scale(1.02) !important;
 }
 
-.bauhaus-btn-red {
-  background-color: var(--bauhaus-red) !important;
+.flat-btn-primary {
+  background-color: var(--flat-primary) !important;
   color: white !important;
-  border: 2px solid var(--bauhaus-black) !important;
-  box-shadow: 4px 4px 0px 0px var(--bauhaus-black) !important;
-  border-radius: 0px !important;
-  font-weight: 700 !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
   text-transform: uppercase !important;
-  letter-spacing: 1px !important;
+  letter-spacing: 0.5px !important;
+  transition: all 0.2s ease !important;
 }
 
-.bauhaus-btn-red:active {
-  transform: translate(2px, 2px) !important;
-  box-shadow: 0px 0px 0px 0px var(--bauhaus-black) !important;
+.flat-btn-primary:hover {
+  transform: scale(1.05) !important;
+  filter: brightness(1.1) !important;
 }
 
-.bauhaus-btn-blue {
-  background-color: var(--bauhaus-blue) !important;
+.flat-btn-secondary {
+  background-color: var(--flat-muted) !important;
+  color: var(--flat-fg) !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+.flat-btn-secondary:hover {
+  transform: scale(1.05) !important;
+  background-color: var(--flat-border) !important;
+}
+
+.flat-btn-accent {
+  background-color: var(--flat-accent) !important;
   color: white !important;
-  border: 2px solid var(--bauhaus-black) !important;
-  box-shadow: 4px 4px 0px 0px var(--bauhaus-black) !important;
-  border-radius: 0px !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
 }
 
-.bauhaus-btn-blue:active {
-  transform: translate(2px, 2px) !important;
-  box-shadow: 0px 0px 0px 0px var(--bauhaus-black) !important;
+.flat-btn-accent:hover {
+  transform: scale(1.05) !important;
+  filter: brightness(1.1) !important;
 }
 
-.bauhaus-btn-yellow {
-  background-color: var(--bauhaus-yellow) !important;
-  color: var(--bauhaus-black) !important;
-  border: 2px solid var(--bauhaus-black) !important;
-  box-shadow: 4px 4px 0px 0px var(--bauhaus-black) !important;
-  border-radius: 0px !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 1px !important;
+.flat-heading {
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  color: var(--flat-fg) !important;
 }
 
-.bauhaus-btn-yellow:active {
-  transform: translate(2px, 2px) !important;
-  box-shadow: 0px 0px 0px 0px var(--bauhaus-black) !important;
+.flat-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: white;
+  transition: transform 0.2s ease;
 }
 
-.bauhaus-heading {
-  font-weight: 900 !important;
-  text-transform: uppercase !important;
-  letter-spacing: -2px !important;
-  line-height: 0.9 !important;
+.group:hover .flat-icon-container {
+  transform: scale(1.1);
 }
 
 .ps__rail-y {
