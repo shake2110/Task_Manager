@@ -129,7 +129,7 @@ const TodoList = () => {
             label: (
               <Flex style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                 <Typography.Title level={5} style={{ margin: 0, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>
-                  {t('home:todoList.title')} ({data?.body.length})
+                  {t('home:todoList.title')} ({data?.body?.length || 0})
                 </Typography.Title>
                 <Tooltip title={t('home:todoList.refreshTasks')}>
                   <Button 
@@ -183,7 +183,7 @@ const TodoList = () => {
                 </Form>
 
                 <div style={{ maxHeight: 300, overflow: 'auto' }}>
-                  {data?.body.length === 0 ? (
+                  {(!data?.body || data?.body?.length === 0) ? (
                     <EmptyListPlaceholder
                       imageSrc="https://s3.us-west-2.amazonaws.com/taskeye.com/assets/empty-box.webp"
                       text={t('home:todoList.noTasks')}

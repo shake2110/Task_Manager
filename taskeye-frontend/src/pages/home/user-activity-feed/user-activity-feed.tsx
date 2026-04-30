@@ -175,7 +175,7 @@ const UserActivityFeed: React.FC = () => {
       className="bauhaus-card"
       title={
         <Typography.Title level={5} style={{ marginBlockEnd: 0, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>
-          {t('tasks.recentActivity')} ({currentCount})
+          {t('tasks.recentActivity')} ({currentCount || 0})
         </Typography.Title>
       }
       extra={

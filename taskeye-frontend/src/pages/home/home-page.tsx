@@ -53,16 +53,19 @@ const HomePage = memo(() => {
     preloadTaskDrawer();
   }, []);
 
-  // Memoize fetch function to prevent recreation on every render
+  // BAUHAUS STABILITY: Stagger fetches to avoid "all at once" connection spikes
   const fetchLookups = useCallback(async () => {
-    const fetchPromises = [
-      dispatch(fetchProjectHealth()),
-      dispatch(fetchProjectCategories()),
-      dispatch(fetchProjectStatuses()),
-      dispatch(fetchProjects()),
-    ].filter(Boolean);
-
-    await Promise.all(fetchPromises);
+    try {
+      // 1. Critical core data first
+      await dispatch(fetchProjects());
+      
+      // 2. Secondary lookups can wait a bit
+      await dispatch(fetchProjectStatuses());
+      await dispatch(fetchProjectCategories());
+      await dispatch(fetchProjectHealth());
+    } catch (error) {
+      console.error('Failed to sequence fetches:', error);
+    }
   }, [dispatch]);
 
   useEffect(() => {

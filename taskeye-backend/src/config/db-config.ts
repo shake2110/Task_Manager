@@ -2,6 +2,7 @@ import { isProduction } from "../shared/utils";
 
 const config: any = {
   max: +(process.env.DB_MAX_CLIENTS || "5"),
+  connectionTimeoutMillis: 10000,
   idleTimeoutMillis: 30000,
 };
 
