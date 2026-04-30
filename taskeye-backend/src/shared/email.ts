@@ -1,11 +1,19 @@
-import {SendEmailCommand, SESClient} from "@aws-sdk/client-ses";
+import nodemailer from "nodemailer";
 import {Validator} from "jsonschema";
 import {QueryResult} from "pg";
 import {log_error, isValidateEmail} from "./utils";
 import emailRequestSchema from "../json_schemas/email-request-schema";
 import db from "../config/db";
 
-const sesClient = new SESClient({region: process.env.AWS_REGION});
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || "smtp.gmail.com",
+  port: parseInt(process.env.SMTP_PORT || "587"),
+  secure: process.env.SMTP_SECURE === "true" || process.env.SMTP_PORT === "465",
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 export interface IEmail {
   to?: string[];
@@ -70,29 +78,15 @@ export async function sendEmail(email: IEmail): Promise<string | null> {
 
     if (!isValidMailBody(options)) return null;
 
-    const charset = "UTF-8";
+    const mailOptions = {
+      from: process.env.EMAIL_FROM || "TaskEye <noreply@taskeye.com>",
+      to: options.to.join(", "),
+      subject: options.subject,
+      html: options.html,
+    };
 
-    const command = new SendEmailCommand({
-      Destination: {
-        ToAddresses: options.to
-      },
-      Message: {
-        Subject: {
-          Charset: charset,
-          Data: options.subject
-        },
-        Body: {
-          Html: {
-            Charset: charset,
-            Data: options.html
-          }
-        }
-      },
-      Source: "TaskEye <noreply@taskeye.com>"
-    });
-
-    const res = await sesClient.send(command);
-    return res.MessageId || null;
+    const res = await transporter.sendMail(mailOptions);
+    return res.messageId || null;
   } catch (e) {
     log_error(e);
   }
