@@ -6,11 +6,11 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "build:frontend": "cd worklenz-frontend && npm install && npm run build",
-    "build:backend": "cd worklenz-backend && npm install && npm run build:prod",
-    "copy:frontend": "npx cpx2 'worklenz-frontend/build/**' worklenz-backend/build/build",
+    "build:frontend": "cd taskeye-frontend && npm install && npm run build",
+    "build:backend": "cd taskeye-backend && npm install && npm run build:prod",
+    "copy:frontend": "npx cpx2 'taskeye-frontend/build/**' taskeye-backend/build/build",
     "build": "npm run build:frontend && npm run build:backend && npm run copy:frontend",
-    "start": "node worklenz-backend/build/bin/www.js",
+    "start": "node taskeye-backend/build/bin/www.js",
     "migrate": "node scripts/migrate.js"
   },
   "dependencies": {

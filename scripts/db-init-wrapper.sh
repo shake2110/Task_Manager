@@ -1,12 +1,12 @@
 #!/bin/bash
 # Database initialization wrapper script
 # This script is run by PostgreSQL container on first startup
-# Based on Worklenz's database initialization process
+# Based on TaskEye's database initialization process
 
 set -e
 
 echo "========================================="
-echo "Worklenz Database Initialization"
+echo "TaskEye Database Initialization"
 echo "========================================="
 
 # Database directory
@@ -20,7 +20,7 @@ if [ -f "/var/lib/postgresql/data/.initialized" ]; then
 fi
 
 # Check for existing backup to restore
-LATEST_BACKUP=$(find "$BACKUP_DIR" -name "worklenz_backup_*.sql.gz" 2>/dev/null | sort -r | head -n 1)
+LATEST_BACKUP=$(find "$BACKUP_DIR" -name "taskeye_backup_*.sql.gz" 2>/dev/null | sort -r | head -n 1)
 
 if [ -n "$LATEST_BACKUP" ] && [ -f "$LATEST_BACKUP" ]; then
     echo "Found existing backup: $LATEST_BACKUP"

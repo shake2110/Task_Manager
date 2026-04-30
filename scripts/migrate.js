@@ -22,7 +22,7 @@ async function migrate() {
   try {
     for (const file of migrations) {
       console.log(`Running migration: ${file}`);
-      const sqlPath = path.join(__dirname, '../worklenz-backend/database/sql', file);
+      const sqlPath = path.join(__dirname, '../taskeye-backend/database/sql', file);
       const sql = fs.readFileSync(sqlPath, 'utf8');
       
       await pool.query(sql);
