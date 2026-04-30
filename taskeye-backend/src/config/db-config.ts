@@ -1,5 +1,5 @@
 const config: any = {
-  max: +(process.env.DB_MAX_CLIENTS || "20"),
+  max: +(process.env.DB_MAX_CLIENTS || "10"),
   idleTimeoutMillis: 30000,
 };
 
